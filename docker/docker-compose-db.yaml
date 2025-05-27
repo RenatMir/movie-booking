@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:17.5
+    container_name: postgres
+    environment:
+      POSTGRES_USER: movie-booking
+      POSTGRES_PASSWORD: movie-booking
+      POSTGRES_DB: movie-booking
+    ports:
+      - 5432:5432
+    volumes:
+      - ./volume/postgres:/var/lib/postgresql/data

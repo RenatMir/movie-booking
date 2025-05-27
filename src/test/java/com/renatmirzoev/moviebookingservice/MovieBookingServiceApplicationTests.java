@@ -1,10 +1,8 @@
 package com.renatmirzoev.moviebookingservice;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class MovieBookingServiceApplicationTests {
+class MovieBookingServiceApplicationTests extends AbstractIntegrationTest {
 
     @Test
     void contextLoads() {
