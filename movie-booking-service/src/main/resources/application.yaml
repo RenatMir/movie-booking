@@ -1,6 +1,6 @@
 spring:
   application:
-    name: movie-booking-service
+    name: movie-booking
   threads:
     virtual:
       enabled: true
@@ -14,7 +14,7 @@ spring:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-    change-log: classpath:db/changelog/db.changelog-master.yaml
+    change-log: classpath:changelog/db.changelog-master.yaml
 
 logbook:
   predicate:
