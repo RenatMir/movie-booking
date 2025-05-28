@@ -2,6 +2,7 @@ package com.renatmirzoev.moviebookingservice.rest.controller;
 
 import com.renatmirzoev.moviebookingservice.ModelUtils;
 import com.renatmirzoev.moviebookingservice.rest.AbstractRestTest;
+import com.renatmirzoev.moviebookingservice.rest.Endpoints;
 import com.renatmirzoev.moviebookingservice.rest.model.ErrorResponse;
 import com.renatmirzoev.moviebookingservice.rest.model.user.CreateUserRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.user.CreateUserResponse;
@@ -27,7 +28,7 @@ class UserControllerTest extends AbstractRestTest {
 
     @Test
     void shouldCreateAndGetUser() {
-        CreateUserRequest request = ModelUtils.createCreateUserRequest();
+        CreateUserRequest request = ModelUtils.createUserRequest();
         ResponseEntity<CreateUserResponse> response = performRequest(Endpoints.User.CREATE, CreateUserResponse.class)
             .httpMethod(HttpMethod.POST)
             .payload(request)
@@ -40,7 +41,7 @@ class UserControllerTest extends AbstractRestTest {
 
     @Test
     void shouldGetBadRequestWhenCreatingExistingUser() {
-        CreateUserRequest request = ModelUtils.createCreateUserRequest();
+        CreateUserRequest request = ModelUtils.createUserRequest();
         ResponseEntity<CreateUserResponse> createUserResponse1 = performRequest(Endpoints.User.CREATE, CreateUserResponse.class)
             .httpMethod(HttpMethod.POST)
             .payload(request)

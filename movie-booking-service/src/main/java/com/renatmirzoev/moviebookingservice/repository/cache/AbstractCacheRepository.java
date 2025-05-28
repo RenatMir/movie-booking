@@ -1,4 +1,4 @@
-package com.renatmirzoev.moviebookingservice.repository;
+package com.renatmirzoev.moviebookingservice.repository.cache;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;

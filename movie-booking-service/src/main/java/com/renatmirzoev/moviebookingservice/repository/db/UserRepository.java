@@ -1,4 +1,4 @@
-package com.renatmirzoev.moviebookingservice.repository;
+package com.renatmirzoev.moviebookingservice.repository.db;
 
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.utils.JdbcUtils;
@@ -20,7 +20,8 @@ public class UserRepository {
         """;
 
     private static final String SQL_SELECT_USER_BY_ID = """
-        SELECT * FROM users WHERE id = :id;
+        SELECT * FROM users
+        WHERE id = :id;
         """;
 
     private static final String SQL_COUNT_USERS_BY_EMAIL = """
@@ -45,7 +46,7 @@ public class UserRepository {
             .optional();
     }
 
-    public boolean existsByEmail(String email) {
+    public boolean exists(String email) {
         int count = jdbcClient.sql(SQL_COUNT_USERS_BY_EMAIL)
             .param("email", email)
             .query(Integer.class)
@@ -60,5 +61,4 @@ public class UserRepository {
         .setEmail(rs.getString("email"))
         .setPhoneNumber(rs.getString("phone_number"))
         .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
-
 }

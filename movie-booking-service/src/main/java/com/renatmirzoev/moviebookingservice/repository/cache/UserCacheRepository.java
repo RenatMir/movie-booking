@@ -1,4 +1,4 @@
-package com.renatmirzoev.moviebookingservice.repository;
+package com.renatmirzoev.moviebookingservice.repository.cache;
 
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.utils.JsonUtils;
@@ -12,7 +12,7 @@ import java.util.Optional;
 public class UserCacheRepository extends AbstractCacheRepository {
 
     private static final String KEY_USER = "user:";
-    private static final String KEY_USER_EXISTS_BY_EMAIL = "userExistsByEmail:";
+    private static final String KEY_USER_EXISTS_BY_EMAIL = "userExists:";
 
     private static final Duration TTL_USER = Duration.ofDays(1);
     private static final Duration TTL_USER_EXISTS_BY_EMAIL = Duration.ofDays(1);
@@ -25,7 +25,7 @@ public class UserCacheRepository extends AbstractCacheRepository {
         return KEY_USER + userId;
     }
 
-    static String keyUserExistsByEmail(String email) {
+    static String keyUserExists(String email) {
         return KEY_USER_EXISTS_BY_EMAIL + email;
     }
 
@@ -38,12 +38,12 @@ public class UserCacheRepository extends AbstractCacheRepository {
             .map(value -> JsonUtils.fromJson(value, User.class));
     }
 
-    public Optional<Boolean> existsByEmail(String email) {
-        return get(keyUserExistsByEmail(email))
+    public Optional<Boolean> exists(String email) {
+        return get(keyUserExists(email))
             .map(Boolean::parseBoolean);
     }
 
-    public void saveExistsByEmail(String email) {
-        save(keyUserExistsByEmail(email), Boolean.TRUE.toString(), TTL_USER_EXISTS_BY_EMAIL);
+    public void saveExists(String email) {
+        save(keyUserExists(email), Boolean.TRUE.toString(), TTL_USER_EXISTS_BY_EMAIL);
     }
 }

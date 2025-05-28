@@ -3,6 +3,7 @@ package com.renatmirzoev.moviebookingservice.repository;
 import com.renatmirzoev.moviebookingservice.AbstractIntegrationTest;
 import com.renatmirzoev.moviebookingservice.ModelUtils;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
+import com.renatmirzoev.moviebookingservice.repository.db.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,7 +25,7 @@ class UserRepositoryTest extends AbstractIntegrationTest {
 
     @Test
     void shouldSaveAndGetUserById() {
-        User user = ModelUtils.createUser();
+        User user = ModelUtils.user();
         user = userRepository.save(user);
 
         Optional<User> userOptional = userRepository.getById(user.getId());
@@ -34,16 +35,16 @@ class UserRepositoryTest extends AbstractIntegrationTest {
 
     @Test
     void shouldReturnFalseWhenUserDoesNotExist() {
-        boolean userExists = userRepository.existsByEmail(UUID.randomUUID().toString());
+        boolean userExists = userRepository.exists(UUID.randomUUID().toString());
         assertThat(userExists).isFalse();
     }
 
     @Test
     void shouldReturnTrueWhenUserExists() {
-        User user = ModelUtils.createUser();
+        User user = ModelUtils.user();
         user = userRepository.save(user);
 
-        boolean userExists = userRepository.existsByEmail(user.getEmail());
+        boolean userExists = userRepository.exists(user.getEmail());
         assertThat(userExists).isTrue();
     }
 

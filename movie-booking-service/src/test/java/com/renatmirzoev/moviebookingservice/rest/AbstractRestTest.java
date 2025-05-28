@@ -2,8 +2,6 @@ package com.renatmirzoev.moviebookingservice.rest;
 
 import com.renatmirzoev.moviebookingservice.AbstractIntegrationTest;
 import com.renatmirzoev.moviebookingservice.rest.model.ErrorResponse;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,22 +25,6 @@ public abstract class AbstractRestTest extends AbstractIntegrationTest {
 
     protected <T> Request<T> performRequest(String endpoint, Class<T> clazz) {
         return new Request<>(endpoint, clazz, mockMvc);
-    }
-
-    protected static class Endpoints {
-
-        protected interface Endpoint {
-            String getPath();
-        }
-
-        @Getter
-        @RequiredArgsConstructor
-        public enum User implements Endpoint {
-            CREATE("/users"),
-            GET_BY_ID("/users/{id}");
-
-            private final String path;
-        }
     }
 
     protected void assertErrorResponse(ResponseEntity<ErrorResponse> response, HttpStatus expectedStatus) {

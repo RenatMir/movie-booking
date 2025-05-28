@@ -2,8 +2,8 @@ package com.renatmirzoev.moviebookingservice.service;
 
 import com.renatmirzoev.moviebookingservice.exception.UserAlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
-import com.renatmirzoev.moviebookingservice.repository.UserCacheRepository;
-import com.renatmirzoev.moviebookingservice.repository.UserRepository;
+import com.renatmirzoev.moviebookingservice.repository.cache.UserCacheRepository;
+import com.renatmirzoev.moviebookingservice.repository.db.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,7 +21,7 @@ public class UserService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public long save(User user) {
-        if (userExistsByEmail(user.getEmail())) {
+        if (userExists(user.getEmail())) {
             throw new UserAlreadyExistsException("User with email %s already exists".formatted(user.getEmail()));
         }
 
@@ -39,11 +39,11 @@ public class UserService {
             });
     }
 
-    public boolean userExistsByEmail(String email) {
-        return userCacheRepository.existsByEmail(email)
+    public boolean userExists(String email) {
+        return userCacheRepository.exists(email)
             .orElseGet(() -> {
-                boolean value = userRepository.existsByEmail(email);
-                userCacheRepository.saveExistsByEmail(email);
+                boolean value = userRepository.exists(email);
+                userCacheRepository.saveExists(email);
                 return value;
             });
     }
