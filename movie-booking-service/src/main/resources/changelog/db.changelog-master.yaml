@@ -1,3 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: db/changelog/sql/init-tables-01.sql
