@@ -5,12 +5,15 @@ import com.renatmirzoev.moviebookingservice.exception.UserAlreadyExistsException
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.repository.UserCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -22,8 +25,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,6 +37,13 @@ class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
+    private InOrder inOrder;
+
+    @BeforeEach
+    void init() {
+        inOrder = Mockito.inOrder(userRepository, userCacheRepository);
+    }
+
     @Test
     void shouldNotSaveUserIfUserExistsFromCache() {
         User user = ModelUtils.createUser();
@@ -46,9 +54,9 @@ class UserServiceTest {
             .isThrownBy(() -> userService.save(user))
             .isInstanceOf(UserAlreadyExistsException.class);
 
-        verify(userCacheRepository).existsByEmail(anyString());
-        verify(userCacheRepository, never()).save(any(User.class));
-        verifyNoInteractions(userRepository);
+        inOrder.verify(userCacheRepository).existsByEmail(anyString());
+        inOrder.verify(userCacheRepository, never()).save(any(User.class));
+        inOrder.verifyNoMoreInteractions();
     }
 
     @Test
@@ -62,10 +70,10 @@ class UserServiceTest {
             .isThrownBy(() -> userService.save(user))
             .isInstanceOf(UserAlreadyExistsException.class);
 
-        verify(userCacheRepository).existsByEmail(anyString());
-        verify(userCacheRepository, never()).save(any(User.class));
-        verify(userRepository).existsByEmail(anyString());
-        verify(userRepository, never()).save(any(User.class));
+        inOrder.verify(userCacheRepository).existsByEmail(anyString());
+        inOrder.verify(userRepository).existsByEmail(anyString());
+        inOrder.verify(userCacheRepository).saveExistsByEmail(anyString());
+        inOrder.verifyNoMoreInteractions();
     }
 
     @Test
@@ -78,10 +86,12 @@ class UserServiceTest {
 
         userService.save(user);
 
-        verify(userCacheRepository).existsByEmail(anyString());
-        verify(userCacheRepository).save(any(User.class));
-        verify(userRepository).existsByEmail(anyString());
-        verify(userRepository).save(any(User.class));
+        inOrder.verify(userCacheRepository).existsByEmail(anyString());
+        inOrder.verify(userRepository).existsByEmail(anyString());
+        inOrder.verify(userCacheRepository).saveExistsByEmail(anyString());
+        inOrder.verify(userRepository).save(any(User.class));
+        inOrder.verify(userCacheRepository).save(any(User.class));
+        inOrder.verifyNoMoreInteractions();
     }
 
     @Test
@@ -92,9 +102,9 @@ class UserServiceTest {
         Optional<User> userOptional = userService.getUserById(Long.MAX_VALUE);
         assertThat(userOptional).isEmpty();
 
-        verify(userCacheRepository).getById(anyLong());
-        verify(userCacheRepository, never()).save(any(User.class));
-        verify(userRepository).getById(anyLong());
+        inOrder.verify(userCacheRepository).getById(anyLong());
+        inOrder.verify(userRepository).getById(anyLong());
+        inOrder.verifyNoMoreInteractions();
     }
 
     @Test
@@ -106,9 +116,8 @@ class UserServiceTest {
         Optional<User> userOptional = userService.getUserById(Long.MAX_VALUE);
         assertThat(userOptional).isPresent().contains(user);
 
-        verify(userCacheRepository).getById(anyLong());
-        verify(userCacheRepository, never()).save(any(User.class));
-        verifyNoInteractions(userRepository);
+        inOrder.verify(userCacheRepository).getById(anyLong());
+        inOrder.verifyNoMoreInteractions();
     }
 
     @Test
@@ -121,9 +130,10 @@ class UserServiceTest {
         Optional<User> userOptional = userService.getUserById(Long.MAX_VALUE);
         assertThat(userOptional).isPresent().contains(user);
 
-        verify(userCacheRepository).getById(anyLong());
-        verify(userCacheRepository).save(any(User.class));
-        verify(userRepository).getById(anyLong());
+        inOrder.verify(userCacheRepository).getById(anyLong());
+        inOrder.verify(userRepository).getById(anyLong());
+        inOrder.verify(userCacheRepository).save(any(User.class));
+        inOrder.verifyNoMoreInteractions();
     }
 
     @ParameterizedTest
@@ -136,9 +146,10 @@ class UserServiceTest {
 
         assertThat(exists).isEqualTo(existParam);
 
-        verify(userCacheRepository).existsByEmail(anyString());
-        verify(userCacheRepository).saveExistsByEmail(anyString());
-        verify(userRepository).existsByEmail(anyString());
+        inOrder.verify(userCacheRepository).existsByEmail(anyString());
+        inOrder.verify(userRepository).existsByEmail(anyString());
+        inOrder.verify(userCacheRepository).saveExistsByEmail(anyString());
+        inOrder.verifyNoMoreInteractions();
     }
 
     @ParameterizedTest
@@ -150,9 +161,8 @@ class UserServiceTest {
 
         assertThat(exists).isEqualTo(existParam);
 
-        verify(userCacheRepository).existsByEmail(anyString());
-        verify(userCacheRepository, never()).saveExistsByEmail(anyString());
-        verifyNoInteractions(userRepository);
+        inOrder.verify(userCacheRepository).existsByEmail(anyString());
+        inOrder.verifyNoMoreInteractions();
     }
 
 }
