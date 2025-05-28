@@ -1,20 +1,27 @@
 package com.renatmirzoev.moviebookingservice;
 
+import com.redis.testcontainers.RedisContainer;
 import lombok.extern.slf4j.Slf4j;
+import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.utility.DockerImageName;
+
+import java.util.stream.Stream;
 
 @Slf4j
 public class TestEnvironment {
 
     private static final PostgreSQLContainer<?> POSTGRES_CONTAINER;
+    private static final RedisContainer REDIS_CONTAINER;
 
     static {
         POSTGRES_CONTAINER = createPostgresContainer();
-        POSTGRES_CONTAINER.start();
+        REDIS_CONTAINER = createRedisContainer();
 
-        log.info("Postgres started at host={} port={}", POSTGRES_CONTAINER.getHost(), POSTGRES_CONTAINER.getFirstMappedPort());
-
+        Stream.of(POSTGRES_CONTAINER, REDIS_CONTAINER)
+            .parallel()
+            .forEach(GenericContainer::start);
     }
 
     public static String postgresUrl() {
@@ -26,10 +33,16 @@ public class TestEnvironment {
 
     @SuppressWarnings("resource")
     private static PostgreSQLContainer<?> createPostgresContainer() {
-        return new PostgreSQLContainer<>("postgres:17-alpine")
+        return new PostgreSQLContainer<>(DockerImageName.parse("postgres:17-alpine"))
             .withDatabaseName("movie-booking")
             .withUsername("movie-booking")
             .withPassword("movie-booking")
+            .waitingFor(Wait.forListeningPort());
+    }
+
+    @SuppressWarnings("resource")
+    private static RedisContainer createRedisContainer() {
+        return new RedisContainer(DockerImageName.parse("redis:8.0.1"))
             .waitingFor(Wait.forListeningPort());
     }
 }

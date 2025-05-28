@@ -2,6 +2,7 @@ package com.renatmirzoev.moviebookingservice.service;
 
 import com.renatmirzoev.moviebookingservice.exception.UserAlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
+import com.renatmirzoev.moviebookingservice.repository.UserCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserCacheRepository userCacheRepository;
 
     @Transactional(propagation = Propagation.REQUIRED)
     public long save(User user) {
@@ -24,14 +26,25 @@ public class UserService {
         }
 
         User savedUser = userRepository.save(user);
+        userCacheRepository.save(savedUser);
         return savedUser.getId();
     }
 
     public Optional<User> getUserById(long id) {
-        return userRepository.getById(id);
+        return userCacheRepository.getById(id)
+            .or(() -> {
+                Optional<User> userOptional = userRepository.getById(id);
+                userOptional.ifPresent(userCacheRepository::save);
+                return userOptional;
+            });
     }
 
     public boolean userExistsByEmail(String email) {
-        return userRepository.existsByEmail(email);
+        return userCacheRepository.existsByEmail(email)
+            .orElseGet(() -> {
+                boolean value = userRepository.existsByEmail(email);
+                userCacheRepository.saveExistsByEmail(email);
+                return value;
+            });
     }
 }

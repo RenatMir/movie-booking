@@ -44,6 +44,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.testcontainers:postgresql'
+    testImplementation 'com.redis.testcontainers:testcontainers-redis:1.6.4'
     testImplementation 'org.instancio:instancio-junit:5.4.1'
 }
 
