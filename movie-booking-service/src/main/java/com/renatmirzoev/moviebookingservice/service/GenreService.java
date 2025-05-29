@@ -19,7 +19,7 @@ public class GenreService {
     private final GenreRepository genreRepository;
     private final GenreCacheRepository genreCacheRepository;
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public long saveGenre(Genre genre) {
         if (genreExists(genre.getName())) {
             throw new GenreAlreadyExistsException("Genre with name %s already exists".formatted(genre.getName()));

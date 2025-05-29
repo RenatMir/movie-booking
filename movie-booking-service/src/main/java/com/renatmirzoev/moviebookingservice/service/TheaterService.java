@@ -19,7 +19,7 @@ public class TheaterService {
     private final TheaterRepository theaterRepository;
     private final TheaterCacheRepository theaterCacheRepository;
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public long saveTheater(Theater theater) {
         if (theaterExists(theater.getName(), theater.getCityId())) {
             throw new TheaterAlreadyExistsException("Theater with name %s and cityId %s already exists".formatted(theater.getName(), theater.getCityId()));

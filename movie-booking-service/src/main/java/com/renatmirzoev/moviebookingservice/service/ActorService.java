@@ -19,7 +19,7 @@ public class ActorService {
     private final ActorRepository actorRepository;
     private final ActorCacheRepository actorCacheRepository;
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public long saveActor(Actor actor) {
         if (actorExists(actor.getFullName())) {
             throw new ActorAlreadyExistsException("Actor with fullName %s already exists".formatted(actor.getFullName()));

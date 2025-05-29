@@ -19,7 +19,7 @@ public class CityService {
     private final CityRepository cityRepository;
     private final CityCacheRepository cityCacheRepository;
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public long saveCity(City city) {
         if (cityExists(city.getName(), city.getCountryId())) {
             throw new CityAlreadyExistsException("City with name %s and countryId %s already exists".formatted(city.getName(), city.getCountryId()));

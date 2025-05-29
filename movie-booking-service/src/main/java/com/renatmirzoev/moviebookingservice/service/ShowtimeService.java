@@ -20,7 +20,7 @@ public class ShowtimeService {
     private final ShowtimeRepository showtimeRepository;
     private final ShowtimeCacheRepository showtimeCacheRepository;
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public long saveShowtime(Showtime showtime) {
         if (showtimeExists(showtime.getMovieId(), showtime.getTheaterId(), showtime.getDateShow())) {
             throw new ShowtimeAlreadyExistsException("Showtime with movieId %s, theaterId %s and dateShow %s already exists"

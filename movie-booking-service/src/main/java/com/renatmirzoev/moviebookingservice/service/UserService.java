@@ -19,7 +19,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserCacheRepository userCacheRepository;
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public long saveUser(User user) {
         if (userExists(user.getEmail())) {
             throw new UserAlreadyExistsException("User with email %s already exists".formatted(user.getEmail()));

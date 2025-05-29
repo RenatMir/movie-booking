@@ -18,7 +18,7 @@ public class MovieService {
     private final MovieRepository movieRepository;
     private final MovieCacheRepository movieCacheRepository;
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public long saveMovie(Movie movie) {
         long id = movieRepository.save(movie);
         movieRepository.addGenresToMovie(id, movie.getGenres());
