@@ -1,7 +1,7 @@
 package com.renatmirzoev.moviebookingservice.service;
 
 import com.renatmirzoev.moviebookingservice.ModelUtils;
-import com.renatmirzoev.moviebookingservice.exception.CityAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.alreadyexists.CityAlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.repository.cache.CityCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.CityRepository;

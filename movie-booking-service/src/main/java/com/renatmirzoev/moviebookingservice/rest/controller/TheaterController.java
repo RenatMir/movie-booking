@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.TheaterNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.notfound.TheaterNotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.TheaterMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.Theater;
 import com.renatmirzoev.moviebookingservice.rest.model.theater.CreateTheaterRequest;

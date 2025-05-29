@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.CityNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.notfound.CityNotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.CityMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.rest.model.city.CreateCityRequest;

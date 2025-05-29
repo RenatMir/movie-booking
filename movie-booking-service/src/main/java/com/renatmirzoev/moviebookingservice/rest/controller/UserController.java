@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.UserNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.notfound.UserNotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.UserMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.rest.model.user.CreateUserRequest;

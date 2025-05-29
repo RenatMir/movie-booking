@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.CountryNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.notfound.CountryNotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.CountryMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
 import com.renatmirzoev.moviebookingservice.rest.model.country.CreateCountryRequest;

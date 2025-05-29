@@ -1,7 +1,7 @@
 package com.renatmirzoev.moviebookingservice.service;
 
 import com.renatmirzoev.moviebookingservice.ModelUtils;
-import com.renatmirzoev.moviebookingservice.exception.TheaterAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.alreadyexists.TheaterAlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.Theater;
 import com.renatmirzoev.moviebookingservice.repository.cache.TheaterCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.TheaterRepository;
