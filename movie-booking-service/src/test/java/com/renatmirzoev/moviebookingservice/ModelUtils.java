@@ -2,9 +2,11 @@ package com.renatmirzoev.moviebookingservice;
 
 import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
+import com.renatmirzoev.moviebookingservice.model.entity.Theater;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.rest.model.city.CreateCityRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.country.CreateCountryRequest;
+import com.renatmirzoev.moviebookingservice.rest.model.theater.CreateTheaterRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.user.CreateUserRequest;
 import org.instancio.Instancio;
 
@@ -41,5 +43,13 @@ public class ModelUtils {
 
     public static CreateCityRequest createCityRequest() {
         return Instancio.create(CreateCityRequest.class);
+    }
+
+    public static Theater theater() {
+        return Instancio.create(Theater.class);
+    }
+
+    public static CreateTheaterRequest createTheaterRequest() {
+        return Instancio.create(CreateTheaterRequest.class);
     }
 }

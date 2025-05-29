@@ -1,16 +1,17 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
 import com.renatmirzoev.moviebookingservice.ModelUtils;
+import com.renatmirzoev.moviebookingservice.model.entity.Country;
+import com.renatmirzoev.moviebookingservice.repository.db.CountryRepository;
 import com.renatmirzoev.moviebookingservice.rest.AbstractRestTest;
 import com.renatmirzoev.moviebookingservice.rest.Endpoints;
 import com.renatmirzoev.moviebookingservice.rest.model.ErrorResponse;
 import com.renatmirzoev.moviebookingservice.rest.model.city.CreateCityRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.city.CreateCityResponse;
 import com.renatmirzoev.moviebookingservice.rest.model.city.GetCityResponse;
-import com.renatmirzoev.moviebookingservice.rest.model.country.CreateCountryRequest;
-import com.renatmirzoev.moviebookingservice.rest.model.country.CreateCountryResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,22 +25,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 class CityControllerTest extends AbstractRestTest {
 
+    @Autowired
+    private CountryRepository countryRepository;
+
     private long countryId;
 
     @BeforeEach
     @Transactional
     void init() {
-        CreateCountryRequest createRequest = ModelUtils.createCountryRequest();
-        ResponseEntity<CreateCountryResponse> createResponse = performRequest(Endpoints.Country.CREATE, CreateCountryResponse.class)
-            .httpMethod(HttpMethod.POST)
-            .payload(createRequest)
-            .andReturn();
+        Country country = ModelUtils.country();
+        country = countryRepository.save(country);
 
-        assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        CreateCountryResponse createCountryResponse = createResponse.getBody();
-        assertThat(createCountryResponse).isNotNull();
-
-        countryId = createCountryResponse.getId();
+        countryId = country.getId();
     }
 
     @Test
