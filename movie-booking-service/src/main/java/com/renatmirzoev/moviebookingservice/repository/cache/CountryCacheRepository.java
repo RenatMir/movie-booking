@@ -38,12 +38,12 @@ public class CountryCacheRepository extends AbstractCacheRepository {
             .map(value -> JsonUtils.fromJson(value, Country.class));
     }
 
-    public Optional<Boolean> exists(String email) {
-        return get(keyCountryExists(email))
+    public Optional<Boolean> exists(String name) {
+        return get(keyCountryExists(name))
             .map(Boolean::parseBoolean);
     }
 
-    public void saveExists(String email) {
-        save(keyCountryExists(email), Boolean.TRUE.toString(), TTL_COUNTRY_EXISTS);
+    public void saveExists(String name) {
+        save(keyCountryExists(name), Boolean.TRUE.toString(), TTL_COUNTRY_EXISTS);
     }
 }

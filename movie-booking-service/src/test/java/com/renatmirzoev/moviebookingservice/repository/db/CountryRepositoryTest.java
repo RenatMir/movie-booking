@@ -1,17 +1,18 @@
-package com.renatmirzoev.moviebookingservice.repository;
+package com.renatmirzoev.moviebookingservice.repository.db;
 
 import com.renatmirzoev.moviebookingservice.AbstractIntegrationTest;
 import com.renatmirzoev.moviebookingservice.ModelUtils;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
-import com.renatmirzoev.moviebookingservice.repository.db.CountryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 class CountryRepositoryTest extends AbstractIntegrationTest {
 
     @Autowired

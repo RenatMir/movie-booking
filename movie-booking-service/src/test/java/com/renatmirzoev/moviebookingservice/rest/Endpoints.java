@@ -26,4 +26,13 @@ public class Endpoints {
 
         private final String path;
     }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum City implements Endpoint {
+        CREATE("/cities"),
+        GET_BY_ID("/cities/{id}");
+
+        private final String path;
+    }
 }

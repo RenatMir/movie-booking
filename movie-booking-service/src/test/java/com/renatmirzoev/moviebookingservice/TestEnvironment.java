@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 @Slf4j
 public class TestEnvironment {
 
+    private static final TestEnvironment INSTANCE = new TestEnvironment();
+
     private static final PostgreSQLContainer<?> POSTGRES_CONTAINER;
     private static final RedisContainer REDIS_CONTAINER;
 
@@ -24,11 +26,26 @@ public class TestEnvironment {
             .forEach(GenericContainer::start);
     }
 
-    public static String postgresUrl() {
+    private TestEnvironment() {
+    }
+
+    public static TestEnvironment getInstance() {
+        return INSTANCE;
+    }
+
+    public String postgresUrl() {
         return String.format("jdbc:postgresql://%s:%s/movie-booking",
             POSTGRES_CONTAINER.getHost(),
             POSTGRES_CONTAINER.getFirstMappedPort().toString()
         );
+    }
+
+    public String redisPort() {
+        return REDIS_CONTAINER.getFirstMappedPort().toString();
+    }
+
+    public String redisHost() {
+        return REDIS_CONTAINER.getHost();
     }
 
     @SuppressWarnings("resource")
