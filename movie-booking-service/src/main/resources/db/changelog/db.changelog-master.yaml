@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/changelog/sql/03-movie-tables.sql
   - include:
       file: db/changelog/sql/04-showtimes-table.sql
+  - include:
+      file: db/changelog/sql/05-auditorium-tables.sql
