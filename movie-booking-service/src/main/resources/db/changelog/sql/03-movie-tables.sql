@@ -19,6 +19,7 @@ CREATE TABLE movies
     description  TEXT,
     date_created timestamptz  NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+CREATE INDEX idx_movies_name ON movies (name);
 
 CREATE TABLE movie_genres
 (
