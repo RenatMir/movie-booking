@@ -44,4 +44,22 @@ public class Endpoints {
 
         private final String path;
     }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum Genre implements Endpoint {
+        CREATE("/genres"),
+        GET_BY_ID("/genres/{id}");
+
+        private final String path;
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum Actor implements Endpoint {
+        CREATE("/actors"),
+        GET_BY_ID("/actors/{id}");
+
+        private final String path;
+    }
 }

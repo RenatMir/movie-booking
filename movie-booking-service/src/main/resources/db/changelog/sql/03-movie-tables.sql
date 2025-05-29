@@ -8,7 +8,7 @@ CREATE TABLE genres
 CREATE TABLE actors
 (
     id           SERIAL PRIMARY KEY,
-    name         VARCHAR(100) NOT NULL UNIQUE,
+    full_name    VARCHAR(100) NOT NULL UNIQUE,
     date_created timestamptz  NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

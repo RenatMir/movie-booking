@@ -23,7 +23,7 @@ public class CityRepository {
         SELECT * FROM cities WHERE id = :id;
         """;
 
-    private static final String SQL_COUNT_CITIES = """
+    private static final String SQL_COUNT_CITIES_BY_NAME_AND_COUNTRY_ID = """
         SELECT COUNT(*) FROM cities
         WHERE name = :name AND country_id = :countryId;
         """;
@@ -46,7 +46,7 @@ public class CityRepository {
     }
 
     public boolean exists(String name, long countryId) {
-        int count = jdbcClient.sql(SQL_COUNT_CITIES)
+        int count = jdbcClient.sql(SQL_COUNT_CITIES_BY_NAME_AND_COUNTRY_ID)
             .param("name", name)
             .param("countryId", countryId)
             .query(Integer.class)
