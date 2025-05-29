@@ -27,6 +27,11 @@ public class CountryRepository {
         SELECT COUNT(*) FROM countries WHERE name = :name;
         """;
 
+    private static final RowMapper<Country> ROW_MAPPER_COUNTRY = (rs, rowNum) -> (Country) new Country()
+        .setId(rs.getLong("id"))
+        .setName(rs.getString("name"))
+        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
+
     private final JdbcClient jdbcClient;
 
     public Country save(Country country) {
@@ -51,9 +56,4 @@ public class CountryRepository {
 
         return count > 0;
     }
-
-    private static final RowMapper<Country> ROW_MAPPER_COUNTRY = (rs, rowNum) -> new Country()
-        .setId(rs.getLong("id"))
-        .setName(rs.getString("name"))
-        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
 }

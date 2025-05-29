@@ -1,14 +1,13 @@
 package com.renatmirzoev.moviebookingservice.model.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.time.Instant;
 
 @Data
 @Accessors(chain = true)
-public class Genre {
+@EqualsAndHashCode(callSuper = true)
+public class Genre extends AbstractEntity {
     private long id;
     private String name;
-    private Instant dateCreated;
 }

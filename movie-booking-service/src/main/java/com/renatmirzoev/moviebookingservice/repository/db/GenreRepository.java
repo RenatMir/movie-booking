@@ -28,6 +28,11 @@ public class GenreRepository {
         SELECT COUNT(*) FROM genres WHERE name = :name;
         """;
 
+    private static final RowMapper<Genre> ROW_MAPPER_GENRE = (rs, rowNum) -> (Genre) new Genre()
+        .setId(rs.getLong("id"))
+        .setName(rs.getString("name"))
+        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
+
     private final JdbcClient jdbcClient;
 
     public Genre save(Genre genre) {
@@ -52,9 +57,4 @@ public class GenreRepository {
 
         return count > 0;
     }
-
-    private static final RowMapper<Genre> ROW_MAPPER_GENRE = (rs, rowNum) -> new Genre()
-        .setId(rs.getLong("id"))
-        .setName(rs.getString("name"))
-        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
 }

@@ -28,6 +28,12 @@ public class CityRepository {
         WHERE name = :name AND country_id = :countryId;
         """;
 
+    private static final RowMapper<City> ROW_MAPPER_CITY = (rs, rowNum) -> (City) new City()
+        .setId(rs.getLong("id"))
+        .setName(rs.getString("name"))
+        .setCountryId(rs.getLong("country_id"))
+        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
+
     private final JdbcClient jdbcClient;
 
     public City save(City city) {
@@ -54,10 +60,4 @@ public class CityRepository {
 
         return count > 0;
     }
-
-    private static final RowMapper<City> ROW_MAPPER_CITY = (rs, rowNum) -> new City()
-        .setId(rs.getLong("id"))
-        .setName(rs.getString("name"))
-        .setCountryId(rs.getLong("country_id"))
-        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
 }

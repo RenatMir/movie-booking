@@ -28,6 +28,13 @@ public class UserRepository {
         SELECT COUNT(*) FROM users WHERE email = :email;
         """;
 
+    private static final RowMapper<User> ROW_MAPPER_USER = (rs, rowNum) -> (User) new User()
+        .setId(rs.getLong("id"))
+        .setFullName(rs.getString("full_name"))
+        .setEmail(rs.getString("email"))
+        .setPhoneNumber(rs.getString("phone_number"))
+        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
+
     private final JdbcClient jdbcClient;
 
     public User save(User user) {
@@ -54,11 +61,4 @@ public class UserRepository {
 
         return count > 0;
     }
-
-    private static final RowMapper<User> ROW_MAPPER_USER = (rs, rowNum) -> new User()
-        .setId(rs.getLong("id"))
-        .setFullName(rs.getString("full_name"))
-        .setEmail(rs.getString("email"))
-        .setPhoneNumber(rs.getString("phone_number"))
-        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
 }

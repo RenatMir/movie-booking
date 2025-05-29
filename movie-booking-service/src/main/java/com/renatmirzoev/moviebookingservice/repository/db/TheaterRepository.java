@@ -28,6 +28,12 @@ public class TheaterRepository {
         WHERE name = :name AND city_id = :cityId;
         """;
 
+    private static final RowMapper<Theater> ROW_MAPPER_THEATER = (rs, rowNum) -> (Theater) new Theater()
+        .setId(rs.getLong("id"))
+        .setName(rs.getString("name"))
+        .setCityId(rs.getLong("city_id"))
+        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
+
     private final JdbcClient jdbcClient;
 
     public Theater save(Theater theater) {
@@ -54,10 +60,4 @@ public class TheaterRepository {
 
         return count > 0;
     }
-
-    private static final RowMapper<Theater> ROW_MAPPER_THEATER = (rs, rowNum) -> new Theater()
-        .setId(rs.getLong("id"))
-        .setName(rs.getString("name"))
-        .setCityId(rs.getLong("city_id"))
-        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
 }

@@ -28,6 +28,11 @@ public class ActorRepository {
         SELECT COUNT(*) FROM actors WHERE full_name = :fullName;
         """;
 
+    private static final RowMapper<Actor> ROW_MAPPER_ACTOR = (rs, rowNum) -> (Actor) new Actor()
+        .setId(rs.getLong("id"))
+        .setFullName(rs.getString("full_name"))
+        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
+
     private final JdbcClient jdbcClient;
 
     public Actor save(Actor actor) {
@@ -52,9 +57,4 @@ public class ActorRepository {
 
         return count > 0;
     }
-
-    private static final RowMapper<Actor> ROW_MAPPER_ACTOR = (rs, rowNum) -> new Actor()
-        .setId(rs.getLong("id"))
-        .setFullName(rs.getString("full_name"))
-        .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
 }
