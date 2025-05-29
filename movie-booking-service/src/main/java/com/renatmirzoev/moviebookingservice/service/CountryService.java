@@ -20,7 +20,7 @@ public class CountryService {
     private final CountryCacheRepository countryCacheRepository;
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public long save(Country country) {
+    public long saveCountry(Country country) {
         if (countryExists(country.getName())) {
             throw new CountryAlreadyExistsException("Country with name %s already exists".formatted(country.getName()));
         }

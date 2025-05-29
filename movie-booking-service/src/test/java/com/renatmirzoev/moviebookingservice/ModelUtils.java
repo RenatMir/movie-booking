@@ -4,12 +4,14 @@ import com.renatmirzoev.moviebookingservice.model.entity.Actor;
 import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
 import com.renatmirzoev.moviebookingservice.model.entity.Genre;
+import com.renatmirzoev.moviebookingservice.model.entity.Movie;
 import com.renatmirzoev.moviebookingservice.model.entity.Theater;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.rest.model.actor.CreateActorRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.city.CreateCityRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.country.CreateCountryRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.genre.CreateGenreRequest;
+import com.renatmirzoev.moviebookingservice.rest.model.movie.CreateMovieRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.theater.CreateTheaterRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.user.CreateUserRequest;
 import org.instancio.Instancio;
@@ -71,5 +73,13 @@ public class ModelUtils {
 
     public static CreateActorRequest createActorRequest() {
         return Instancio.create(CreateActorRequest.class);
+    }
+
+    public static Movie movie() {
+        return Instancio.create(Movie.class);
+    }
+
+    public static CreateMovieRequest createMovieRequest() {
+        return Instancio.create(CreateMovieRequest.class);
     }
 }

@@ -51,7 +51,7 @@ class ActorServiceTest {
         when(actorCacheRepository.exists(anyString())).thenReturn(Optional.of(true));
 
         assertThatException()
-            .isThrownBy(() -> actorService.save(actor))
+            .isThrownBy(() -> actorService.saveActor(actor))
             .isInstanceOf(ActorAlreadyExistsException.class);
 
         inOrder.verify(actorCacheRepository).exists(anyString());
@@ -67,7 +67,7 @@ class ActorServiceTest {
         when(actorRepository.exists(anyString())).thenReturn(true);
 
         assertThatException()
-            .isThrownBy(() -> actorService.save(actor))
+            .isThrownBy(() -> actorService.saveActor(actor))
             .isInstanceOf(ActorAlreadyExistsException.class);
 
         inOrder.verify(actorCacheRepository).exists(anyString());
@@ -84,7 +84,7 @@ class ActorServiceTest {
         when(actorRepository.exists(anyString())).thenReturn(false);
         when(actorRepository.save(any(Actor.class))).thenReturn(actor);
 
-        actorService.save(actor);
+        actorService.saveActor(actor);
 
         inOrder.verify(actorCacheRepository).exists(anyString());
         inOrder.verify(actorRepository).exists(anyString());

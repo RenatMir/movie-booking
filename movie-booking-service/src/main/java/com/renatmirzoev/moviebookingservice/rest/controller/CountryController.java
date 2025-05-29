@@ -44,7 +44,7 @@ public class CountryController {
     @PostMapping
     public ResponseEntity<CreateCountryResponse> createCountry(@Valid @RequestBody CreateCountryRequest request) {
         Country country = countryMapper.toCountry(request);
-        long id = countryService.save(country);
+        long id = countryService.saveCountry(country);
 
         CreateCountryResponse response = new CreateCountryResponse()
             .setId(id);

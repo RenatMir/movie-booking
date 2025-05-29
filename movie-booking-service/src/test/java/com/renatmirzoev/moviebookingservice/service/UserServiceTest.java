@@ -51,7 +51,7 @@ class UserServiceTest {
         when(userCacheRepository.exists(anyString())).thenReturn(Optional.of(true));
 
         assertThatException()
-            .isThrownBy(() -> userService.save(user))
+            .isThrownBy(() -> userService.saveUser(user))
             .isInstanceOf(UserAlreadyExistsException.class);
 
         inOrder.verify(userCacheRepository).exists(anyString());
@@ -67,7 +67,7 @@ class UserServiceTest {
         when(userRepository.exists(anyString())).thenReturn(true);
 
         assertThatException()
-            .isThrownBy(() -> userService.save(user))
+            .isThrownBy(() -> userService.saveUser(user))
             .isInstanceOf(UserAlreadyExistsException.class);
 
         inOrder.verify(userCacheRepository).exists(anyString());
@@ -84,7 +84,7 @@ class UserServiceTest {
         when(userRepository.exists(anyString())).thenReturn(false);
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        userService.save(user);
+        userService.saveUser(user);
 
         inOrder.verify(userCacheRepository).exists(anyString());
         inOrder.verify(userRepository).exists(anyString());

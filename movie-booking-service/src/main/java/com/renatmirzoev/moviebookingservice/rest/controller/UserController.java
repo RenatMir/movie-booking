@@ -44,7 +44,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<CreateUserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
         User user = userMapper.toUser(request);
-        long id = userService.save(user);
+        long id = userService.saveUser(user);
 
         CreateUserResponse response = new CreateUserResponse()
             .setId(id);

@@ -62,4 +62,13 @@ public class Endpoints {
 
         private final String path;
     }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum Movie implements Endpoint {
+        CREATE("/movies"),
+        GET_BY_ID("/movies/{id}");
+
+        private final String path;
+    }
 }

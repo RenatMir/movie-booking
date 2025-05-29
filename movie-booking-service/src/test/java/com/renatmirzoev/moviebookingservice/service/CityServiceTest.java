@@ -51,7 +51,7 @@ class CityServiceTest {
         when(cityCacheRepository.exists(anyString(), anyLong())).thenReturn(Optional.of(true));
 
         assertThatException()
-            .isThrownBy(() -> cityService.save(city))
+            .isThrownBy(() -> cityService.saveCity(city))
             .isInstanceOf(CityAlreadyExistsException.class);
 
         inOrder.verify(cityCacheRepository).exists(anyString(), anyLong());
@@ -67,7 +67,7 @@ class CityServiceTest {
         when(cityRepository.exists(anyString(), anyLong())).thenReturn(true);
 
         assertThatException()
-            .isThrownBy(() -> cityService.save(city))
+            .isThrownBy(() -> cityService.saveCity(city))
             .isInstanceOf(CityAlreadyExistsException.class);
 
         inOrder.verify(cityCacheRepository).exists(anyString(), anyLong());
@@ -84,7 +84,7 @@ class CityServiceTest {
         when(cityRepository.exists(anyString(), anyLong())).thenReturn(false);
         when(cityRepository.save(any(City.class))).thenReturn(city);
 
-        cityService.save(city);
+        cityService.saveCity(city);
 
         inOrder.verify(cityCacheRepository).exists(anyString(), anyLong());
         inOrder.verify(cityRepository).exists(anyString(), anyLong());

@@ -44,7 +44,7 @@ public class GenreController {
     @PostMapping
     public ResponseEntity<CreateGenreResponse> createGenre(@Valid @RequestBody CreateGenreRequest request) {
         Genre genre = genreMapper.toGenre(request);
-        long id = genreService.save(genre);
+        long id = genreService.saveGenre(genre);
 
         CreateGenreResponse response = new CreateGenreResponse()
             .setId(id);

@@ -51,7 +51,7 @@ class TheaterServiceTest {
         when(theaterCacheRepository.exists(anyString(), anyLong())).thenReturn(Optional.of(true));
 
         assertThatException()
-            .isThrownBy(() -> theaterService.save(theater))
+            .isThrownBy(() -> theaterService.saveTheater(theater))
             .isInstanceOf(TheaterAlreadyExistsException.class);
 
         inOrder.verify(theaterCacheRepository).exists(anyString(), anyLong());
@@ -67,7 +67,7 @@ class TheaterServiceTest {
         when(theaterRepository.exists(anyString(), anyLong())).thenReturn(true);
 
         assertThatException()
-            .isThrownBy(() -> theaterService.save(theater))
+            .isThrownBy(() -> theaterService.saveTheater(theater))
             .isInstanceOf(TheaterAlreadyExistsException.class);
 
         inOrder.verify(theaterCacheRepository).exists(anyString(), anyLong());
@@ -84,7 +84,7 @@ class TheaterServiceTest {
         when(theaterRepository.exists(anyString(), anyLong())).thenReturn(false);
         when(theaterRepository.save(any(Theater.class))).thenReturn(theater);
 
-        theaterService.save(theater);
+        theaterService.saveTheater(theater);
 
         inOrder.verify(theaterCacheRepository).exists(anyString(), anyLong());
         inOrder.verify(theaterRepository).exists(anyString(), anyLong());

@@ -12,7 +12,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Transactional
 class TheaterCacheRepositoryTest extends AbstractIntegrationTest {
 
     @Autowired

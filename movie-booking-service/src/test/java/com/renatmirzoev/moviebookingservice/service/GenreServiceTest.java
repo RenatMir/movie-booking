@@ -51,7 +51,7 @@ class GenreServiceTest {
         when(genreCacheRepository.exists(anyString())).thenReturn(Optional.of(true));
 
         assertThatException()
-            .isThrownBy(() -> genreService.save(genre))
+            .isThrownBy(() -> genreService.saveGenre(genre))
             .isInstanceOf(GenreAlreadyExistsException.class);
 
         inOrder.verify(genreCacheRepository).exists(anyString());
@@ -67,7 +67,7 @@ class GenreServiceTest {
         when(genreRepository.exists(anyString())).thenReturn(true);
 
         assertThatException()
-            .isThrownBy(() -> genreService.save(genre))
+            .isThrownBy(() -> genreService.saveGenre(genre))
             .isInstanceOf(GenreAlreadyExistsException.class);
 
         inOrder.verify(genreCacheRepository).exists(anyString());
@@ -84,7 +84,7 @@ class GenreServiceTest {
         when(genreRepository.exists(anyString())).thenReturn(false);
         when(genreRepository.save(any(Genre.class))).thenReturn(genre);
 
-        genreService.save(genre);
+        genreService.saveGenre(genre);
 
         inOrder.verify(genreCacheRepository).exists(anyString());
         inOrder.verify(genreRepository).exists(anyString());

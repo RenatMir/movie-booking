@@ -13,7 +13,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Transactional
 class CityRepositoryTest extends AbstractIntegrationTest {
 
     @Autowired

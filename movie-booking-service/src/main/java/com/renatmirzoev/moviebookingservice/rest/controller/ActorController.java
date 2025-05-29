@@ -44,7 +44,7 @@ public class ActorController {
     @PostMapping
     public ResponseEntity<CreateActorResponse> createActor(@Valid @RequestBody CreateActorRequest request) {
         Actor actor = actorMapper.toActor(request);
-        long id = actorService.save(actor);
+        long id = actorService.saveActor(actor);
 
         CreateActorResponse response = new CreateActorResponse()
             .setId(id);

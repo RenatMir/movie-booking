@@ -51,7 +51,7 @@ class CountryServiceTest {
         when(countryCacheRepository.exists(anyString())).thenReturn(Optional.of(true));
 
         assertThatException()
-            .isThrownBy(() -> countryService.save(country))
+            .isThrownBy(() -> countryService.saveCountry(country))
             .isInstanceOf(CountryAlreadyExistsException.class);
 
         inOrder.verify(countryCacheRepository).exists(anyString());
@@ -67,7 +67,7 @@ class CountryServiceTest {
         when(countryRepository.exists(anyString())).thenReturn(true);
 
         assertThatException()
-            .isThrownBy(() -> countryService.save(country))
+            .isThrownBy(() -> countryService.saveCountry(country))
             .isInstanceOf(CountryAlreadyExistsException.class);
 
         inOrder.verify(countryCacheRepository).exists(anyString());
@@ -84,7 +84,7 @@ class CountryServiceTest {
         when(countryRepository.exists(anyString())).thenReturn(false);
         when(countryRepository.save(any(Country.class))).thenReturn(country);
 
-        countryService.save(country);
+        countryService.saveCountry(country);
 
         inOrder.verify(countryCacheRepository).exists(anyString());
         inOrder.verify(countryRepository).exists(anyString());

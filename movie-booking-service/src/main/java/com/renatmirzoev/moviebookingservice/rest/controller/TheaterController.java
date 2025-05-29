@@ -44,7 +44,7 @@ public class TheaterController {
     @PostMapping
     public ResponseEntity<CreateTheaterResponse> createTheater(@Valid @RequestBody CreateTheaterRequest request) {
         Theater theater = theaterMapper.toTheater(request);
-        long id = theaterService.save(theater);
+        long id = theaterService.saveTheater(theater);
 
         CreateTheaterResponse response = new CreateTheaterResponse()
             .setId(id);

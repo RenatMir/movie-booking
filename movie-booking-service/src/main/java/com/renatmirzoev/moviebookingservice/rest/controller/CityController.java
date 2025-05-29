@@ -44,7 +44,7 @@ public class CityController {
     @PostMapping
     public ResponseEntity<CreateCityResponse> createCity(@Valid @RequestBody CreateCityRequest request) {
         City city = cityMapper.toCity(request);
-        long id = cityService.save(city);
+        long id = cityService.saveCity(city);
 
         CreateCityResponse response = new CreateCityResponse()
             .setId(id);
