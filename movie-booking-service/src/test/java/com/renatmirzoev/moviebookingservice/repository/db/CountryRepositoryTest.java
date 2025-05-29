@@ -5,12 +5,13 @@ import com.renatmirzoev.moviebookingservice.ModelUtils;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatException;
 
 class CountryRepositoryTest extends AbstractIntegrationTest {
 
@@ -31,6 +32,16 @@ class CountryRepositoryTest extends AbstractIntegrationTest {
         Optional<Country> countryOptional = countryRepository.getById(country.getId());
 
         assertThat(countryOptional).isPresent().contains(country);
+    }
+
+    @Test
+    void shouldNotBeAbleToSaveDuplicate() {
+        Country country = ModelUtils.country();
+        countryRepository.save(country);
+
+        assertThatException()
+            .isThrownBy(() -> countryRepository.save(country))
+            .isInstanceOf(DataIntegrityViolationException.class);
     }
 
     @Test

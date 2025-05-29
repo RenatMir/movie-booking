@@ -5,12 +5,13 @@ import com.renatmirzoev.moviebookingservice.ModelUtils;
 import com.renatmirzoev.moviebookingservice.model.entity.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatException;
 
 class GenreRepositoryTest extends AbstractIntegrationTest {
 
@@ -31,6 +32,16 @@ class GenreRepositoryTest extends AbstractIntegrationTest {
         Optional<Genre> genreOptional = genreRepository.getById(genre.getId());
 
         assertThat(genreOptional).isPresent().contains(genre);
+    }
+
+    @Test
+    void shouldNotBeAbleToSaveDuplicate() {
+        Genre genre = ModelUtils.genre();
+        genreRepository.save(genre);
+
+        assertThatException()
+            .isThrownBy(() -> genreRepository.save(genre))
+            .isInstanceOf(DataIntegrityViolationException.class);
     }
 
     @Test

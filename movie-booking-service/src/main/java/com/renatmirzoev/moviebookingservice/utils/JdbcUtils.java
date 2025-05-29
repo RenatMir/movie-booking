@@ -19,6 +19,10 @@ public class JdbcUtils {
         return timestamp != null ? timestamp.toInstant() : null;
     }
 
+    public static Timestamp timestampOrNull(Instant instant) {
+        return instant != null ? Timestamp.from(instant) : null;
+    }
+
     @SneakyThrows
     @SuppressWarnings("unchecked")
     public static <T> Set<T> toSet(Array sqlArray) {

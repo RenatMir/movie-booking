@@ -5,6 +5,7 @@ import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
 import com.renatmirzoev.moviebookingservice.model.entity.Genre;
 import com.renatmirzoev.moviebookingservice.model.entity.Movie;
+import com.renatmirzoev.moviebookingservice.model.entity.Showtime;
 import com.renatmirzoev.moviebookingservice.model.entity.Theater;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.rest.model.actor.CreateActorRequest;
@@ -12,10 +13,14 @@ import com.renatmirzoev.moviebookingservice.rest.model.city.CreateCityRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.country.CreateCountryRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.genre.CreateGenreRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.movie.CreateMovieRequest;
+import com.renatmirzoev.moviebookingservice.rest.model.showtime.CreateShowtimeRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.theater.CreateTheaterRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.user.CreateUserRequest;
 import org.instancio.Instancio;
 
+import java.time.Instant;
+
+import static com.renatmirzoev.moviebookingservice.model.entity.Showtime.DATE_SHOW_TRUNCATION;
 import static org.instancio.Select.field;
 
 public class ModelUtils {
@@ -81,5 +86,19 @@ public class ModelUtils {
 
     public static CreateMovieRequest createMovieRequest() {
         return Instancio.create(CreateMovieRequest.class);
+    }
+
+    public static Showtime showtime() {
+        Showtime showtime = Instancio.of(Showtime.class)
+            .create();
+        showtime.setDateShow(Instant.now().truncatedTo(DATE_SHOW_TRUNCATION));
+        return showtime;
+    }
+
+    public static CreateShowtimeRequest createShowtimeRequest() {
+        CreateShowtimeRequest createShowtimeRequest = Instancio.of(CreateShowtimeRequest.class)
+            .create();
+        createShowtimeRequest.setDateShow(Instant.now().truncatedTo(DATE_SHOW_TRUNCATION));
+        return createShowtimeRequest;
     }
 }

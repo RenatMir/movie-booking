@@ -37,8 +37,8 @@ class MovieControllerTest extends AbstractRestTest {
     private Genre genre;
     private Actor actor;
 
-    @Transactional
     @BeforeEach
+    @Transactional
     void init() {
         genre = genreRepository.save(ModelUtils.genre());
         actor = actorRepository.save(ModelUtils.actor());
