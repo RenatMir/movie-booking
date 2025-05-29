@@ -21,8 +21,8 @@ public class CountryCacheRepository extends AbstractCacheRepository {
         super(stringRedisTemplate);
     }
 
-    static String keyCountry(long countryId) {
-        return KEY_COUNTRY + countryId;
+    static String keyCountry(long id) {
+        return KEY_COUNTRY + id;
     }
 
     static String keyCountryExists(String name) {
@@ -33,8 +33,8 @@ public class CountryCacheRepository extends AbstractCacheRepository {
         save(keyCountry(country.getId()), JsonUtils.toJson(country), TTL_COUNTRY);
     }
 
-    public Optional<Country> getById(long countryId) {
-        return get(keyCountry(countryId))
+    public Optional<Country> getById(long id) {
+        return get(keyCountry(id))
             .map(value -> JsonUtils.fromJson(value, Country.class));
     }
 

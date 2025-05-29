@@ -21,8 +21,8 @@ public class UserCacheRepository extends AbstractCacheRepository {
         super(stringRedisTemplate);
     }
 
-    static String keyUser(long userId) {
-        return KEY_USER + userId;
+    static String keyUser(long id) {
+        return KEY_USER + id;
     }
 
     static String keyUserExists(String email) {
@@ -33,8 +33,8 @@ public class UserCacheRepository extends AbstractCacheRepository {
         save(keyUser(user.getId()), JsonUtils.toJson(user), TTL_USER);
     }
 
-    public Optional<User> getById(long userId) {
-        return get(keyUser(userId))
+    public Optional<User> getById(long id) {
+        return get(keyUser(id))
             .map(value -> JsonUtils.fromJson(value, User.class));
     }
 

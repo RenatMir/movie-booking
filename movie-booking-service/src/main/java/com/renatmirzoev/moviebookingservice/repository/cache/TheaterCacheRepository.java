@@ -21,8 +21,8 @@ public class TheaterCacheRepository extends AbstractCacheRepository {
         super(stringRedisTemplate);
     }
 
-    static String keyTheater(long theaterId) {
-        return KEY_THEATER + theaterId;
+    static String keyTheater(long id) {
+        return KEY_THEATER + id;
     }
 
     static String keyTheaterExists(String name, long cityId) {
@@ -33,8 +33,8 @@ public class TheaterCacheRepository extends AbstractCacheRepository {
         save(keyTheater(theater.getId()), JsonUtils.toJson(theater), TTL_THEATER);
     }
 
-    public Optional<Theater> getById(long theaterId) {
-        return get(keyTheater(theaterId))
+    public Optional<Theater> getById(long id) {
+        return get(keyTheater(id))
             .map(value -> JsonUtils.fromJson(value, Theater.class));
     }
 

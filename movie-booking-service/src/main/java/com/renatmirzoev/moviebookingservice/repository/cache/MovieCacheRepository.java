@@ -19,16 +19,16 @@ public class MovieCacheRepository extends AbstractCacheRepository {
         super(stringRedisTemplate);
     }
 
-    static String keyMovie(long movieId) {
-        return KEY_MOVIE + movieId;
+    static String keyMovie(long id) {
+        return KEY_MOVIE + id;
     }
 
     public void save(Movie movie) {
         save(keyMovie(movie.getId()), JsonUtils.toJson(movie), TTL_MOVIE);
     }
 
-    public Optional<Movie> getById(long movieId) {
-        return get(keyMovie(movieId))
+    public Optional<Movie> getById(long id) {
+        return get(keyMovie(id))
             .map(value -> JsonUtils.fromJson(value, Movie.class));
     }
 }

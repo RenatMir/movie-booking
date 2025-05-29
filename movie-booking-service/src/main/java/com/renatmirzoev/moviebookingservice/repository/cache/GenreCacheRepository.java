@@ -21,8 +21,8 @@ public class GenreCacheRepository extends AbstractCacheRepository {
         super(stringRedisTemplate);
     }
 
-    static String keyGenre(long genreId) {
-        return KEY_GENRE + genreId;
+    static String keyGenre(long id) {
+        return KEY_GENRE + id;
     }
 
     static String keyGenreExists(String name) {
@@ -33,8 +33,8 @@ public class GenreCacheRepository extends AbstractCacheRepository {
         save(keyGenre(genre.getId()), JsonUtils.toJson(genre), TTL_GENRE);
     }
 
-    public Optional<Genre> getById(long genreId) {
-        return get(keyGenre(genreId))
+    public Optional<Genre> getById(long id) {
+        return get(keyGenre(id))
             .map(value -> JsonUtils.fromJson(value, Genre.class));
     }
 

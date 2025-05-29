@@ -34,9 +34,9 @@ class MovieRepositoryTest extends AbstractIntegrationTest {
         Movie movie = ModelUtils.movie();
         movie.setActors(Collections.emptySet());
         movie.setGenres(Collections.emptySet());
-        long movieId = movieRepository.save(movie);
+        long id = movieRepository.save(movie);
 
-        Optional<Movie> movieOptional = movieRepository.getById(movieId);
+        Optional<Movie> movieOptional = movieRepository.getById(id);
 
         assertThat(movieOptional).isPresent();
         Movie getMovie = movieOptional.get();
@@ -56,11 +56,11 @@ class MovieRepositoryTest extends AbstractIntegrationTest {
         Movie movie = ModelUtils.movie();
         movie.setGenres(Set.of(genre));
         movie.setActors(Set.of(actor));
-        long movieId = movieRepository.save(movie);
-        movieRepository.addActorsToMovie(movieId, movie.getActors());
-        movieRepository.addGenresToMovie(movieId, movie.getGenres());
+        long id = movieRepository.save(movie);
+        movieRepository.addActorsToMovie(id, movie.getActors());
+        movieRepository.addGenresToMovie(id, movie.getGenres());
 
-        Optional<Movie> movieOptional = movieRepository.getById(movieId);
+        Optional<Movie> movieOptional = movieRepository.getById(id);
         assertThat(movieOptional).isPresent();
 
         Movie getMovie = movieOptional.get();

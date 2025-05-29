@@ -21,8 +21,8 @@ public class CityCacheRepository extends AbstractCacheRepository {
         super(stringRedisTemplate);
     }
 
-    static String keyCity(long cityId) {
-        return KEY_CITY + cityId;
+    static String keyCity(long id) {
+        return KEY_CITY + id;
     }
 
     static String keyCityExists(String name, long countryId) {
@@ -33,8 +33,8 @@ public class CityCacheRepository extends AbstractCacheRepository {
         save(keyCity(city.getId()), JsonUtils.toJson(city), TTL_CITY);
     }
 
-    public Optional<City> getById(long cityId) {
-        return get(keyCity(cityId))
+    public Optional<City> getById(long id) {
+        return get(keyCity(id))
             .map(value -> JsonUtils.fromJson(value, City.class));
     }
 

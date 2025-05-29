@@ -20,11 +20,11 @@ public class MovieService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public long saveMovie(Movie movie) {
-        long movieId = movieRepository.save(movie);
-        movieRepository.addGenresToMovie(movieId, movie.getGenres());
-        movieRepository.addActorsToMovie(movieId, movie.getActors());
+        long id = movieRepository.save(movie);
+        movieRepository.addGenresToMovie(id, movie.getGenres());
+        movieRepository.addActorsToMovie(id, movie.getActors());
         movieCacheRepository.save(movie);
-        return movieId;
+        return id;
     }
 
     public Optional<Movie> getMovieById(long id) {

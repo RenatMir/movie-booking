@@ -21,8 +21,8 @@ public class ActorCacheRepository extends AbstractCacheRepository {
         super(stringRedisTemplate);
     }
 
-    static String keyActor(long actorId) {
-        return KEY_ACTOR + actorId;
+    static String keyActor(long id) {
+        return KEY_ACTOR + id;
     }
 
     static String keyActorExists(String fullName) {
@@ -33,8 +33,8 @@ public class ActorCacheRepository extends AbstractCacheRepository {
         save(keyActor(actor.getId()), JsonUtils.toJson(actor), TTL_ACTOR);
     }
 
-    public Optional<Actor> getById(long actorId) {
-        return get(keyActor(actorId))
+    public Optional<Actor> getById(long id) {
+        return get(keyActor(id))
             .map(value -> JsonUtils.fromJson(value, Actor.class));
     }
 
