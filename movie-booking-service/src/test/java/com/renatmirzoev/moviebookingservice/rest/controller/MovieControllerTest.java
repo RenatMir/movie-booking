@@ -46,7 +46,7 @@ class MovieControllerTest extends AbstractRestTest {
 
     @Test
     void shouldGetMovieNotFound() {
-        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Movie.GET_BY_ID, ErrorResponse.class)
+        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Movie.GET, ErrorResponse.class)
             .pathParams(Map.of("id", String.valueOf(Long.MAX_VALUE)))
             .andReturn();
 
@@ -71,7 +71,7 @@ class MovieControllerTest extends AbstractRestTest {
         assertThat(createMovieResponse).isNotNull();
 
         {
-            ResponseEntity<GetMovieResponse> getResponse = performRequest(Endpoints.Movie.GET_BY_ID, GetMovieResponse.class)
+            ResponseEntity<GetMovieResponse> getResponse = performRequest(Endpoints.Movie.GET, GetMovieResponse.class)
                 .pathParams(Map.of("id", String.valueOf(createMovieResponse.getId())))
                 .andReturn();
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);

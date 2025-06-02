@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.service;
 
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.UserAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.repository.cache.UserCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.UserRepository;
@@ -22,7 +22,7 @@ public class UserService {
     @Transactional
     public long saveUser(User user) {
         if (userExists(user.getEmail())) {
-            throw new UserAlreadyExistsException("User with email %s already exists".formatted(user.getEmail()));
+            throw new AlreadyExistsException("User with email %s already exists".formatted(user.getEmail()));
         }
 
         User savedUser = userRepository.save(user);

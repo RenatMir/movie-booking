@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.notfound.AuditoriumNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.NotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.AuditoriumMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.Auditorium;
 import com.renatmirzoev.moviebookingservice.rest.model.auditorium.CreateAuditoriumRequest;
@@ -33,7 +33,7 @@ public class AuditoriumController {
     public ResponseEntity<GetAuditoriumResponse> getAuditorium(@PathVariable("id") long id) {
         Optional<Auditorium> auditoriumOptional = auditoriumService.getAuditoriumById(id);
         if (auditoriumOptional.isEmpty()) {
-            throw new AuditoriumNotFoundException("Auditorium with id %s not found".formatted(id));
+            throw new NotFoundException("Auditorium with id %s not found".formatted(id));
         }
 
         GetAuditoriumResponse response = auditoriumMapper.toGetAuditoriumResponse(auditoriumOptional.get());

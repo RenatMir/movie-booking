@@ -48,7 +48,7 @@ class TheaterControllerTest extends AbstractRestTest {
 
     @Test
     void shouldGetTheaterNotFound() {
-        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Theater.GET_BY_ID, ErrorResponse.class)
+        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Theater.GET, ErrorResponse.class)
             .pathParams(Map.of("id", String.valueOf(Long.MAX_VALUE)))
             .andReturn();
 
@@ -69,7 +69,7 @@ class TheaterControllerTest extends AbstractRestTest {
         assertThat(createTheaterResponse).isNotNull();
 
         {
-            ResponseEntity<GetTheaterResponse> getResponse = performRequest(Endpoints.Theater.GET_BY_ID, GetTheaterResponse.class)
+            ResponseEntity<GetTheaterResponse> getResponse = performRequest(Endpoints.Theater.GET, GetTheaterResponse.class)
                 .pathParams(Map.of("id", String.valueOf(createTheaterResponse.getId())))
                 .andReturn();
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);

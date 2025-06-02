@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.service;
 
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.ActorAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.Actor;
 import com.renatmirzoev.moviebookingservice.repository.cache.ActorCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.ActorRepository;
@@ -22,7 +22,7 @@ public class ActorService {
     @Transactional
     public long saveActor(Actor actor) {
         if (actorExists(actor.getFullName())) {
-            throw new ActorAlreadyExistsException("Actor with fullName %s already exists".formatted(actor.getFullName()));
+            throw new AlreadyExistsException("Actor with fullName %s already exists".formatted(actor.getFullName()));
         }
 
         Actor savedActor = actorRepository.save(actor);

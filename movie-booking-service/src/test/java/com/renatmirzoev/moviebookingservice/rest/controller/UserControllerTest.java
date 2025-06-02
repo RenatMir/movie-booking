@@ -21,7 +21,7 @@ class UserControllerTest extends AbstractRestTest {
 
     @Test
     void shouldGetUserNotFound() {
-        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.User.GET_BY_ID, ErrorResponse.class)
+        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.User.GET, ErrorResponse.class)
             .pathParams(Map.of("id", String.valueOf(Long.MAX_VALUE)))
             .andReturn();
 
@@ -41,7 +41,7 @@ class UserControllerTest extends AbstractRestTest {
         assertThat(createUserResponse).isNotNull();
 
         {
-            ResponseEntity<GetUserResponse> getResponse = performRequest(Endpoints.User.GET_BY_ID, GetUserResponse.class)
+            ResponseEntity<GetUserResponse> getResponse = performRequest(Endpoints.User.GET, GetUserResponse.class)
                 .pathParams(Map.of("id", String.valueOf(createUserResponse.getId())))
                 .andReturn();
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);

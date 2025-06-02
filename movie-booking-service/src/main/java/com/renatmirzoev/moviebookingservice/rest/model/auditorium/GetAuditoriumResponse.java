@@ -30,6 +30,7 @@ public class GetAuditoriumResponse {
         public static class Seat implements Comparable<Seat> {
             private long id;
             private long label;
+            private boolean booked;
 
             @Override
             public int compareTo(Seat o) {

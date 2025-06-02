@@ -1,7 +1,7 @@
 package com.renatmirzoev.moviebookingservice.service;
 
 import com.renatmirzoev.moviebookingservice.ModelUtils;
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.AuditoriumAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.Auditorium;
 import com.renatmirzoev.moviebookingservice.repository.cache.AuditoriumCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.AuditoriumRepository;
@@ -54,7 +54,7 @@ class AuditoriumServiceTest {
 
         assertThatException()
             .isThrownBy(() -> auditoriumService.saveAuditorium(auditorium))
-            .isInstanceOf(AuditoriumAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(auditoriumCacheRepository).exists(anyString(), anyLong());
         inOrder.verify(auditoriumCacheRepository, never()).save(any(Auditorium.class));
@@ -70,7 +70,7 @@ class AuditoriumServiceTest {
 
         assertThatException()
             .isThrownBy(() -> auditoriumService.saveAuditorium(auditorium))
-            .isInstanceOf(AuditoriumAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(auditoriumCacheRepository).exists(anyString(), anyLong());
         inOrder.verify(auditoriumRepository).exists(anyString(), anyLong());

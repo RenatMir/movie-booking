@@ -21,7 +21,7 @@ class GenreControllerTest extends AbstractRestTest {
 
     @Test
     void shouldGetGenreNotFound() {
-        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Genre.GET_BY_ID, ErrorResponse.class)
+        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Genre.GET, ErrorResponse.class)
             .pathParams(Map.of("id", String.valueOf(Long.MAX_VALUE)))
             .andReturn();
 
@@ -41,7 +41,7 @@ class GenreControllerTest extends AbstractRestTest {
         assertThat(createGenreResponse).isNotNull();
 
         {
-            ResponseEntity<GetGenreResponse> getResponse = performRequest(Endpoints.Genre.GET_BY_ID, GetGenreResponse.class)
+            ResponseEntity<GetGenreResponse> getResponse = performRequest(Endpoints.Genre.GET, GetGenreResponse.class)
                 .pathParams(Map.of("id", String.valueOf(createGenreResponse.getId())))
                 .andReturn();
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);

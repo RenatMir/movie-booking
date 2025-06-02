@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.notfound.MovieNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.NotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.MovieMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.Movie;
 import com.renatmirzoev.moviebookingservice.rest.model.movie.CreateMovieRequest;
@@ -33,7 +33,7 @@ public class MovieController {
     public ResponseEntity<GetMovieResponse> getMovieById(@PathVariable("id") long id) {
         Optional<Movie> movieOptional = movieService.getMovieById(id);
         if (movieOptional.isEmpty()) {
-            throw new MovieNotFoundException("Movie with id %s not found".formatted(id));
+            throw new NotFoundException("Movie with id %s not found".formatted(id));
         }
 
         Movie movie = movieOptional.get();

@@ -40,7 +40,7 @@ class CityControllerTest extends AbstractRestTest {
 
     @Test
     void shouldGetCityNotFound() {
-        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.City.GET_BY_ID, ErrorResponse.class)
+        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.City.GET, ErrorResponse.class)
             .pathParams(Map.of("id", String.valueOf(Long.MAX_VALUE)))
             .andReturn();
 
@@ -61,7 +61,7 @@ class CityControllerTest extends AbstractRestTest {
         assertThat(createCityResponse).isNotNull();
 
         {
-            ResponseEntity<GetCityResponse> getResponse = performRequest(Endpoints.City.GET_BY_ID, GetCityResponse.class)
+            ResponseEntity<GetCityResponse> getResponse = performRequest(Endpoints.City.GET, GetCityResponse.class)
                 .pathParams(Map.of("id", String.valueOf(createCityResponse.getId())))
                 .andReturn();
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);

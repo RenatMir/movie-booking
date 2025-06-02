@@ -1,7 +1,7 @@
 package com.renatmirzoev.moviebookingservice.service;
 
 import com.renatmirzoev.moviebookingservice.ModelUtils;
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.CountryAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
 import com.renatmirzoev.moviebookingservice.repository.cache.CountryCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.CountryRepository;
@@ -52,7 +52,7 @@ class CountryServiceTest {
 
         assertThatException()
             .isThrownBy(() -> countryService.saveCountry(country))
-            .isInstanceOf(CountryAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(countryCacheRepository).exists(anyString());
         inOrder.verify(countryCacheRepository, never()).save(any(Country.class));
@@ -68,7 +68,7 @@ class CountryServiceTest {
 
         assertThatException()
             .isThrownBy(() -> countryService.saveCountry(country))
-            .isInstanceOf(CountryAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(countryCacheRepository).exists(anyString());
         inOrder.verify(countryRepository).exists(anyString());

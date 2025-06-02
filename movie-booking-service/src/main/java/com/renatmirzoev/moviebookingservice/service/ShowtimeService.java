@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.service;
 
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.ShowtimeAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.Showtime;
 import com.renatmirzoev.moviebookingservice.repository.cache.ShowtimeCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.ShowtimeRepository;
@@ -23,7 +23,7 @@ public class ShowtimeService {
     @Transactional
     public long saveShowtime(Showtime showtime) {
         if (showtimeExists(showtime.getMovieId(), showtime.getAuditoriumId(), showtime.getDateShow())) {
-            throw new ShowtimeAlreadyExistsException("Showtime with movieId %s, auditoriumId %s and dateShow %s already exists"
+            throw new AlreadyExistsException("Showtime with movieId %s, auditoriumId %s and dateShow %s already exists"
                 .formatted(showtime.getMovieId(), showtime.getAuditoriumId(), showtime.getDateShow()));
         }
 

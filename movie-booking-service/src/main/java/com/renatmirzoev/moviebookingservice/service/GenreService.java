@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.service;
 
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.GenreAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.Genre;
 import com.renatmirzoev.moviebookingservice.repository.cache.GenreCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.GenreRepository;
@@ -22,7 +22,7 @@ public class GenreService {
     @Transactional
     public long saveGenre(Genre genre) {
         if (genreExists(genre.getName())) {
-            throw new GenreAlreadyExistsException("Genre with name %s already exists".formatted(genre.getName()));
+            throw new AlreadyExistsException("Genre with name %s already exists".formatted(genre.getName()));
         }
 
         Genre savedGenre = genreRepository.save(genre);

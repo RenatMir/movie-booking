@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.notfound.ActorNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.NotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.ActorMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.Actor;
 import com.renatmirzoev.moviebookingservice.rest.model.actor.CreateActorRequest;
@@ -33,7 +33,7 @@ public class ActorController {
     public ResponseEntity<GetActorResponse> getActor(@PathVariable("id") long id) {
         Optional<Actor> actorOptional = actorService.getActorById(id);
         if (actorOptional.isEmpty()) {
-            throw new ActorNotFoundException("Actor with id %s not found".formatted(id));
+            throw new NotFoundException("Actor with id %s not found".formatted(id));
         }
 
         Actor actor = actorOptional.get();

@@ -21,7 +21,7 @@ class CountryControllerTest extends AbstractRestTest {
 
     @Test
     void shouldGetCountryNotFound() {
-        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Country.GET_BY_ID, ErrorResponse.class)
+        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Country.GET, ErrorResponse.class)
             .pathParams(Map.of("id", String.valueOf(Long.MAX_VALUE)))
             .andReturn();
 
@@ -41,7 +41,7 @@ class CountryControllerTest extends AbstractRestTest {
         assertThat(createCountryResponse).isNotNull();
 
         {
-            ResponseEntity<GetCountryResponse> getResponse = performRequest(Endpoints.Country.GET_BY_ID, GetCountryResponse.class)
+            ResponseEntity<GetCountryResponse> getResponse = performRequest(Endpoints.Country.GET, GetCountryResponse.class)
                 .pathParams(Map.of("id", String.valueOf(createCountryResponse.getId())))
                 .andReturn();
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);

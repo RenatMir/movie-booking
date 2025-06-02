@@ -1,7 +1,7 @@
 package com.renatmirzoev.moviebookingservice.service;
 
 import com.renatmirzoev.moviebookingservice.ModelUtils;
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.UserAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.repository.cache.UserCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.UserRepository;
@@ -52,7 +52,7 @@ class UserServiceTest {
 
         assertThatException()
             .isThrownBy(() -> userService.saveUser(user))
-            .isInstanceOf(UserAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(userCacheRepository).exists(anyString());
         inOrder.verify(userCacheRepository, never()).save(any(User.class));
@@ -68,7 +68,7 @@ class UserServiceTest {
 
         assertThatException()
             .isThrownBy(() -> userService.saveUser(user))
-            .isInstanceOf(UserAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(userCacheRepository).exists(anyString());
         inOrder.verify(userRepository).exists(anyString());

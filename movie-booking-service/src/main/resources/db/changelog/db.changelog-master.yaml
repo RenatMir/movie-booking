@@ -9,3 +9,5 @@ databaseChangeLog:
       file: db/changelog/sql/04-auditorium-tables.sql
   - include:
       file: db/changelog/sql/05-showtimes-table.sql
+  - include:
+      file: db/changelog/sql/06-bookings-table.sql

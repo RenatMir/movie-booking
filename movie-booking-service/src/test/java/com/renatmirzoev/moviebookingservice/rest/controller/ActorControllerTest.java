@@ -21,7 +21,7 @@ class ActorControllerTest extends AbstractRestTest {
 
     @Test
     void shouldGetActorNotFound() {
-        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Actor.GET_BY_ID, ErrorResponse.class)
+        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Actor.GET, ErrorResponse.class)
             .pathParams(Map.of("id", String.valueOf(Long.MAX_VALUE)))
             .andReturn();
 
@@ -41,7 +41,7 @@ class ActorControllerTest extends AbstractRestTest {
         assertThat(createActorResponse).isNotNull();
 
         {
-            ResponseEntity<GetActorResponse> getResponse = performRequest(Endpoints.Actor.GET_BY_ID, GetActorResponse.class)
+            ResponseEntity<GetActorResponse> getResponse = performRequest(Endpoints.Actor.GET, GetActorResponse.class)
                 .pathParams(Map.of("id", String.valueOf(createActorResponse.getId())))
                 .andReturn();
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);

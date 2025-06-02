@@ -1,7 +1,7 @@
 package com.renatmirzoev.moviebookingservice.service;
 
 import com.renatmirzoev.moviebookingservice.ModelUtils;
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.CityAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.repository.cache.CityCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.CityRepository;
@@ -52,7 +52,7 @@ class CityServiceTest {
 
         assertThatException()
             .isThrownBy(() -> cityService.saveCity(city))
-            .isInstanceOf(CityAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(cityCacheRepository).exists(anyString(), anyLong());
         inOrder.verify(cityCacheRepository, never()).save(any(City.class));
@@ -68,7 +68,7 @@ class CityServiceTest {
 
         assertThatException()
             .isThrownBy(() -> cityService.saveCity(city))
-            .isInstanceOf(CityAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(cityCacheRepository).exists(anyString(), anyLong());
         inOrder.verify(cityRepository).exists(anyString(), anyLong());

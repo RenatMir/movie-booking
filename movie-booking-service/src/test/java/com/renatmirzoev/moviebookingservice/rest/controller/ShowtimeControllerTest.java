@@ -57,7 +57,7 @@ class ShowtimeControllerTest extends AbstractRestTest {
 
     @Test
     void shouldGetShowtimeNotFound() {
-        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Showtime.GET_BY_ID, ErrorResponse.class)
+        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Showtime.GET, ErrorResponse.class)
             .pathParams(Map.of("id", String.valueOf(Long.MAX_VALUE)))
             .andReturn();
 
@@ -79,7 +79,7 @@ class ShowtimeControllerTest extends AbstractRestTest {
         assertThat(createShowtimeResponse).isNotNull();
 
         {
-            ResponseEntity<GetShowtimeResponse> getResponse = performRequest(Endpoints.Showtime.GET_BY_ID, GetShowtimeResponse.class)
+            ResponseEntity<GetShowtimeResponse> getResponse = performRequest(Endpoints.Showtime.GET, GetShowtimeResponse.class)
                 .pathParams(Map.of("id", String.valueOf(createShowtimeResponse.getId())))
                 .andReturn();
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);

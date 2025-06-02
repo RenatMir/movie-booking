@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.service;
 
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.AuditoriumAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.Auditorium;
 import com.renatmirzoev.moviebookingservice.repository.cache.AuditoriumCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.AuditoriumRepository;
@@ -23,7 +23,7 @@ public class AuditoriumService {
     @Transactional
     public long saveAuditorium(Auditorium auditorium) {
         if (auditoriumExists(auditorium.getName(), auditorium.getTheaterId())) {
-            throw new AuditoriumAlreadyExistsException("Auditorium with name %s and theaterId %s already exists".formatted(auditorium.getName(), auditorium.getTheaterId()));
+            throw new AlreadyExistsException("Auditorium with name %s and theaterId %s already exists".formatted(auditorium.getName(), auditorium.getTheaterId()));
         }
 
         long id = auditoriumRepository.save(auditorium);

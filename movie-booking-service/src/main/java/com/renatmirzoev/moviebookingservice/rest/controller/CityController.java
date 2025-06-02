@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.notfound.CityNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.NotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.CityMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.rest.model.city.CreateCityRequest;
@@ -33,7 +33,7 @@ public class CityController {
     public ResponseEntity<GetCityResponse> getCity(@PathVariable("id") long id) {
         Optional<City> cityOptional = cityService.getCityById(id);
         if (cityOptional.isEmpty()) {
-            throw new CityNotFoundException("City with id %s not found".formatted(id));
+            throw new NotFoundException("City with id %s not found".formatted(id));
         }
 
         City city = cityOptional.get();

@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.notfound.CountryNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.NotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.CountryMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
 import com.renatmirzoev.moviebookingservice.rest.model.country.CreateCountryRequest;
@@ -33,7 +33,7 @@ public class CountryController {
     public ResponseEntity<GetCountryResponse> getCountry(@PathVariable("id") long id) {
         Optional<Country> countryOptional = countryService.getCountryById(id);
         if (countryOptional.isEmpty()) {
-            throw new CountryNotFoundException("Country with id %s not found".formatted(id));
+            throw new NotFoundException("Country with id %s not found".formatted(id));
         }
 
         Country country = countryOptional.get();

@@ -1,7 +1,7 @@
 package com.renatmirzoev.moviebookingservice.service;
 
 import com.renatmirzoev.moviebookingservice.ModelUtils;
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.ShowtimeAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.Showtime;
 import com.renatmirzoev.moviebookingservice.repository.cache.ShowtimeCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.ShowtimeRepository;
@@ -51,7 +51,7 @@ class ShowtimeServiceTest {
 
         assertThatException()
             .isThrownBy(() -> showtimeService.saveShowtime(showtime))
-            .isInstanceOf(ShowtimeAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(showtimeCacheRepository).exists(anyLong(), anyLong(), any(Instant.class));
         inOrder.verify(showtimeCacheRepository, never()).save(any(Showtime.class));
@@ -67,7 +67,7 @@ class ShowtimeServiceTest {
 
         assertThatException()
             .isThrownBy(() -> showtimeService.saveShowtime(showtime))
-            .isInstanceOf(ShowtimeAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(showtimeCacheRepository).exists(anyLong(), anyLong(), any(Instant.class));
         inOrder.verify(showtimeRepository).exists(anyLong(), anyLong(), any(Instant.class));

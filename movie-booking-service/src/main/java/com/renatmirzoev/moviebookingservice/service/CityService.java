@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.service;
 
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.CityAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.repository.cache.CityCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.CityRepository;
@@ -22,7 +22,7 @@ public class CityService {
     @Transactional
     public long saveCity(City city) {
         if (cityExists(city.getName(), city.getCountryId())) {
-            throw new CityAlreadyExistsException("City with name %s and countryId %s already exists".formatted(city.getName(), city.getCountryId()));
+            throw new AlreadyExistsException("City with name %s and countryId %s already exists".formatted(city.getName(), city.getCountryId()));
         }
 
         City savedCity = cityRepository.save(city);

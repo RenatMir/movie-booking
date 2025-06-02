@@ -25,4 +25,8 @@ public abstract class AbstractCacheRepository {
     protected void save(String key, String value, Duration ttl) {
         stringRedisTemplate.opsForValue().set(key(key), value, ttl);
     }
+
+    protected void delete(String key) {
+        stringRedisTemplate.delete(key(key));
+    }
 }

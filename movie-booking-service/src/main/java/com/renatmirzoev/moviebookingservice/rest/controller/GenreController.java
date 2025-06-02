@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.notfound.GenreNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.NotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.GenreMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.Genre;
 import com.renatmirzoev.moviebookingservice.rest.model.genre.CreateGenreRequest;
@@ -33,7 +33,7 @@ public class GenreController {
     public ResponseEntity<GetGenreResponse> getGenre(@PathVariable("id") long id) {
         Optional<Genre> genreOptional = genreService.getGenreById(id);
         if (genreOptional.isEmpty()) {
-            throw new GenreNotFoundException("Genre with id %s not found".formatted(id));
+            throw new NotFoundException("Genre with id %s not found".formatted(id));
         }
 
         Genre genre = genreOptional.get();

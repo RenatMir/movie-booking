@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.service;
 
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.CountryAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
 import com.renatmirzoev.moviebookingservice.repository.cache.CountryCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.CountryRepository;
@@ -22,7 +22,7 @@ public class CountryService {
     @Transactional
     public long saveCountry(Country country) {
         if (countryExists(country.getName())) {
-            throw new CountryAlreadyExistsException("Country with name %s already exists".formatted(country.getName()));
+            throw new AlreadyExistsException("Country with name %s already exists".formatted(country.getName()));
         }
 
         Country savedCountry = countryRepository.save(country);

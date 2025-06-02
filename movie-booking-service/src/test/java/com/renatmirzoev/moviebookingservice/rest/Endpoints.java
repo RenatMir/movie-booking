@@ -13,7 +13,7 @@ public class Endpoints {
     @RequiredArgsConstructor
     public enum User implements Endpoint {
         CREATE("/users"),
-        GET_BY_ID("/users/{id}");
+        GET("/users/{id}");
 
         private final String path;
     }
@@ -22,7 +22,7 @@ public class Endpoints {
     @RequiredArgsConstructor
     public enum Country implements Endpoint {
         CREATE("/countries"),
-        GET_BY_ID("/countries/{id}");
+        GET("/countries/{id}");
 
         private final String path;
     }
@@ -31,7 +31,7 @@ public class Endpoints {
     @RequiredArgsConstructor
     public enum City implements Endpoint {
         CREATE("/cities"),
-        GET_BY_ID("/cities/{id}");
+        GET("/cities/{id}");
 
         private final String path;
     }
@@ -40,7 +40,7 @@ public class Endpoints {
     @RequiredArgsConstructor
     public enum Theater implements Endpoint {
         CREATE("/theaters"),
-        GET_BY_ID("/theaters/{id}");
+        GET("/theaters/{id}");
 
         private final String path;
     }
@@ -49,7 +49,7 @@ public class Endpoints {
     @RequiredArgsConstructor
     public enum Genre implements Endpoint {
         CREATE("/genres"),
-        GET_BY_ID("/genres/{id}");
+        GET("/genres/{id}");
 
         private final String path;
     }
@@ -58,7 +58,7 @@ public class Endpoints {
     @RequiredArgsConstructor
     public enum Actor implements Endpoint {
         CREATE("/actors"),
-        GET_BY_ID("/actors/{id}");
+        GET("/actors/{id}");
 
         private final String path;
     }
@@ -67,7 +67,7 @@ public class Endpoints {
     @RequiredArgsConstructor
     public enum Movie implements Endpoint {
         CREATE("/movies"),
-        GET_BY_ID("/movies/{id}");
+        GET("/movies/{id}");
 
         private final String path;
     }
@@ -76,7 +76,7 @@ public class Endpoints {
     @RequiredArgsConstructor
     public enum Showtime implements Endpoint {
         CREATE("/showtimes"),
-        GET_BY_ID("/showtimes/{id}");
+        GET("/showtimes/{id}");
 
         private final String path;
     }
@@ -85,7 +85,17 @@ public class Endpoints {
     @RequiredArgsConstructor
     public enum Auditorium implements Endpoint {
         CREATE("/auditoriums"),
-        GET_BY_ID("/auditoriums/{id}");
+        GET("/auditoriums/{id}");
+
+        private final String path;
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum Booking implements Endpoint {
+        CREATE("/bookings"),
+        GET("/bookings/{id}"),
+        DELETE("/bookings/{id}");
 
         private final String path;
     }

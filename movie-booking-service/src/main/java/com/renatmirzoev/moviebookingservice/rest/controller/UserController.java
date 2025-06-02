@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.notfound.UserNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.NotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.UserMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.rest.model.user.CreateUserRequest;
@@ -33,7 +33,7 @@ public class UserController {
     public ResponseEntity<GetUserResponse> getUser(@PathVariable("id") long id) {
         Optional<User> userOptional = userService.getUserById(id);
         if (userOptional.isEmpty()) {
-            throw new UserNotFoundException("User with id %s not found".formatted(id));
+            throw new NotFoundException("User with id %s not found".formatted(id));
         }
 
         User user = userOptional.get();

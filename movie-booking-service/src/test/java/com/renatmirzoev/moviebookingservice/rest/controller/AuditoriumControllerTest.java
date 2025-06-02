@@ -49,7 +49,7 @@ class AuditoriumControllerTest extends AbstractRestTest {
 
     @Test
     void shouldGetAuditoriumNotFound() {
-        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Auditorium.GET_BY_ID, ErrorResponse.class)
+        ResponseEntity<ErrorResponse> response = performRequest(Endpoints.Auditorium.GET, ErrorResponse.class)
             .pathParams(Map.of("id", String.valueOf(Long.MAX_VALUE)))
             .andReturn();
 
@@ -70,7 +70,7 @@ class AuditoriumControllerTest extends AbstractRestTest {
         assertThat(createAuditoriumResponse).isNotNull();
 
         {
-            ResponseEntity<GetAuditoriumResponse> getResponse = performRequest(Endpoints.Auditorium.GET_BY_ID, GetAuditoriumResponse.class)
+            ResponseEntity<GetAuditoriumResponse> getResponse = performRequest(Endpoints.Auditorium.GET, GetAuditoriumResponse.class)
                 .pathParams(Map.of("id", String.valueOf(createAuditoriumResponse.getId())))
                 .andReturn();
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);

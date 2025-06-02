@@ -1,7 +1,7 @@
 package com.renatmirzoev.moviebookingservice.service;
 
 import com.renatmirzoev.moviebookingservice.ModelUtils;
-import com.renatmirzoev.moviebookingservice.exception.alreadyexists.GenreAlreadyExistsException;
+import com.renatmirzoev.moviebookingservice.exception.AlreadyExistsException;
 import com.renatmirzoev.moviebookingservice.model.entity.Genre;
 import com.renatmirzoev.moviebookingservice.repository.cache.GenreCacheRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.GenreRepository;
@@ -52,7 +52,7 @@ class GenreServiceTest {
 
         assertThatException()
             .isThrownBy(() -> genreService.saveGenre(genre))
-            .isInstanceOf(GenreAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(genreCacheRepository).exists(anyString());
         inOrder.verify(genreCacheRepository, never()).save(any(Genre.class));
@@ -68,7 +68,7 @@ class GenreServiceTest {
 
         assertThatException()
             .isThrownBy(() -> genreService.saveGenre(genre))
-            .isInstanceOf(GenreAlreadyExistsException.class);
+            .isInstanceOf(AlreadyExistsException.class);
 
         inOrder.verify(genreCacheRepository).exists(anyString());
         inOrder.verify(genreRepository).exists(anyString());

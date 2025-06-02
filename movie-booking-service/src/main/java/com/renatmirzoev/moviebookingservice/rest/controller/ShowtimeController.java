@@ -1,6 +1,6 @@
 package com.renatmirzoev.moviebookingservice.rest.controller;
 
-import com.renatmirzoev.moviebookingservice.exception.notfound.ShowtimeNotFoundException;
+import com.renatmirzoev.moviebookingservice.exception.NotFoundException;
 import com.renatmirzoev.moviebookingservice.mapper.ShowtimeMapper;
 import com.renatmirzoev.moviebookingservice.model.entity.Showtime;
 import com.renatmirzoev.moviebookingservice.rest.model.showtime.CreateShowtimeRequest;
@@ -33,7 +33,7 @@ public class ShowtimeController {
     public ResponseEntity<GetShowtimeResponse> getShowtime(@PathVariable("id") long id) {
         Optional<Showtime> showtimeOptional = showtimeService.getShowtimeById(id);
         if (showtimeOptional.isEmpty()) {
-            throw new ShowtimeNotFoundException("Showtime with id %s not found".formatted(id));
+            throw new NotFoundException("Showtime with id %s not found".formatted(id));
         }
 
         Showtime showtime = showtimeOptional.get();

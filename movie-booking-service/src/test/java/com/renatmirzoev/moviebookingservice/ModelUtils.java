@@ -1,7 +1,9 @@
 package com.renatmirzoev.moviebookingservice;
 
+import com.renatmirzoev.moviebookingservice.model.entity.AbstractEntity;
 import com.renatmirzoev.moviebookingservice.model.entity.Actor;
 import com.renatmirzoev.moviebookingservice.model.entity.Auditorium;
+import com.renatmirzoev.moviebookingservice.model.entity.Booking;
 import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
 import com.renatmirzoev.moviebookingservice.model.entity.Genre;
@@ -13,6 +15,7 @@ import com.renatmirzoev.moviebookingservice.model.entity.Theater;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.rest.model.actor.CreateActorRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.auditorium.CreateAuditoriumRequest;
+import com.renatmirzoev.moviebookingservice.rest.model.booking.CreateBookingRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.city.CreateCityRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.country.CreateCountryRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.genre.CreateGenreRequest;
@@ -36,7 +39,7 @@ public class ModelUtils {
         return Instancio.of(User.class)
             .generate(field(User::getEmail), gen -> gen.net().email())
             .ignore(field(User::getId))
-            .ignore(field(User::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
             .create();
     }
 
@@ -49,7 +52,7 @@ public class ModelUtils {
     public static Country country() {
         return Instancio.of(Country.class)
             .ignore(field(Country::getId))
-            .ignore(field(Country::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
             .create();
     }
 
@@ -60,7 +63,7 @@ public class ModelUtils {
     public static City city() {
         return Instancio.of(City.class)
             .ignore(field(City::getId))
-            .ignore(field(City::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
             .create();
     }
 
@@ -71,7 +74,7 @@ public class ModelUtils {
     public static Theater theater() {
         return Instancio.of(Theater.class)
             .ignore(field(Theater::getId))
-            .ignore(field(Theater::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
             .create();
     }
 
@@ -82,7 +85,7 @@ public class ModelUtils {
     public static Genre genre() {
         return Instancio.of(Genre.class)
             .ignore(field(Genre::getId))
-            .ignore(field(Genre::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
             .create();
     }
 
@@ -93,7 +96,7 @@ public class ModelUtils {
     public static Actor actor() {
         return Instancio.of(Actor.class)
             .ignore(field(Actor::getId))
-            .ignore(field(Actor::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
             .create();
     }
 
@@ -104,7 +107,7 @@ public class ModelUtils {
     public static Movie movie() {
         return Instancio.of(Movie.class)
             .ignore(field(Movie::getId))
-            .ignore(field(Movie::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
             .create();
     }
 
@@ -115,7 +118,7 @@ public class ModelUtils {
     public static Showtime showtime() {
         Showtime showtime = Instancio.of(Showtime.class)
             .ignore(field(Showtime::getId))
-            .ignore(field(Showtime::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
             .create();
         showtime.setDateShow(Instant.now().truncatedTo(DATE_SHOW_TRUNCATION));
         return showtime;
@@ -131,7 +134,9 @@ public class ModelUtils {
     public static Auditorium auditorium() {
         return Instancio.of(Auditorium.class)
             .ignore(field(Auditorium::getId))
-            .ignore(field(Auditorium::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
+            .ignore(field(Row::getId))
+            .ignore(field(Seat::getId))
             .create();
     }
 
@@ -142,14 +147,25 @@ public class ModelUtils {
     public static Row row() {
         return Instancio.of(Row.class)
             .ignore(field(Row::getId))
-            .ignore(field(Row::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
             .create();
     }
 
     public static Seat seat() {
         return Instancio.of(Seat.class)
             .ignore(field(Seat::getId))
-            .ignore(field(Seat::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
             .create();
+    }
+
+    public static Booking booking() {
+        return Instancio.of(Booking.class)
+            .ignore(field(Booking::getDateCreated))
+            .ignore(field(AbstractEntity::getDateCreated))
+            .create();
+    }
+
+    public static CreateBookingRequest createBookingRequest() {
+        return Instancio.create(CreateBookingRequest.class);
     }
 }
