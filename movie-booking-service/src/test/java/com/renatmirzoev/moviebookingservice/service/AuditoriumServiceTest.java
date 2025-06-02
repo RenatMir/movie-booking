@@ -34,6 +34,8 @@ class AuditoriumServiceTest {
     private AuditoriumRepository auditoriumRepository;
     @Mock
     private AuditoriumCacheRepository auditoriumCacheRepository;
+    @Mock
+    private RowService rowService;
     @InjectMocks
     private AuditoriumService auditoriumService;
 

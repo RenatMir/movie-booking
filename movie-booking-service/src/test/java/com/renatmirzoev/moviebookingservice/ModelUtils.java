@@ -2,16 +2,17 @@ package com.renatmirzoev.moviebookingservice;
 
 import com.renatmirzoev.moviebookingservice.model.entity.Actor;
 import com.renatmirzoev.moviebookingservice.model.entity.Auditorium;
-import com.renatmirzoev.moviebookingservice.model.entity.Row;
-import com.renatmirzoev.moviebookingservice.model.entity.Seat;
 import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
 import com.renatmirzoev.moviebookingservice.model.entity.Genre;
 import com.renatmirzoev.moviebookingservice.model.entity.Movie;
+import com.renatmirzoev.moviebookingservice.model.entity.Row;
+import com.renatmirzoev.moviebookingservice.model.entity.Seat;
 import com.renatmirzoev.moviebookingservice.model.entity.Showtime;
 import com.renatmirzoev.moviebookingservice.model.entity.Theater;
 import com.renatmirzoev.moviebookingservice.model.entity.User;
 import com.renatmirzoev.moviebookingservice.rest.model.actor.CreateActorRequest;
+import com.renatmirzoev.moviebookingservice.rest.model.auditorium.CreateAuditoriumRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.city.CreateCityRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.country.CreateCountryRequest;
 import com.renatmirzoev.moviebookingservice.rest.model.genre.CreateGenreRequest;
@@ -132,6 +133,10 @@ public class ModelUtils {
             .ignore(field(Auditorium::getId))
             .ignore(field(Auditorium::getDateCreated))
             .create();
+    }
+
+    public static CreateAuditoriumRequest createAuditoriumRequest() {
+        return Instancio.create(CreateAuditoriumRequest.class);
     }
 
     public static Row row() {

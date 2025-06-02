@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 public class SeatRepository {
 
     private static final String SQL_INSERT_SEAT = """
-        INSERT INTO auditorium_seats (label, row_id)
+        INSERT INTO seats (label, row_id)
         VALUES (:label, :rowId);
         """;
 
     private static final String SQL_SELECT_SEAT_BY_ID = """
-        SELECT * FROM auditorium_seats
+        SELECT * FROM seats
         WHERE id = :id
         """;
 

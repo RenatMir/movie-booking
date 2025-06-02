@@ -18,10 +18,15 @@ public class RowService {
 
     private final RowRepository rowRepository;
     private final RowCacheRepository rowCacheRepository;
+    private final SeatService seatService;
 
     @Transactional
     public void saveRows(Set<Row> rows) {
-        rowRepository.save(rows);
+        rows.forEach(row -> {
+            long rowId = rowRepository.save(row);
+            row.getSeats().forEach(seat -> seat.setRowId(rowId));
+            seatService.saveSeats(row.getSeats());
+        });
     }
 
     public Optional<Row> getRowById(long id) {

@@ -19,7 +19,6 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,6 +26,8 @@ class RowServiceTest {
 
     @Mock
     private RowRepository rowRepository;
+    @Mock
+    private SeatService seatService;
     @Mock
     private RowCacheRepository rowCacheRepository;
     @InjectMocks
@@ -43,11 +44,11 @@ class RowServiceTest {
     void shouldSaveRow() {
         Row row = ModelUtils.row();
 
-        when(rowRepository.save(anySet())).thenReturn(Set.of(Integer.MAX_VALUE));
+        when(rowRepository.save(any(Row.class))).thenReturn(Long.MAX_VALUE);
 
         rowService.saveRows(Set.of(row));
 
-        inOrder.verify(rowRepository).save(anySet());
+        inOrder.verify(rowRepository).save(any(Row.class));
         inOrder.verifyNoMoreInteractions();
     }
 

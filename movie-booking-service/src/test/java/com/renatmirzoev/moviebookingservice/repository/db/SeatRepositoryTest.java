@@ -3,10 +3,10 @@ package com.renatmirzoev.moviebookingservice.repository.db;
 import com.renatmirzoev.moviebookingservice.AbstractIntegrationTest;
 import com.renatmirzoev.moviebookingservice.ModelUtils;
 import com.renatmirzoev.moviebookingservice.model.entity.Auditorium;
-import com.renatmirzoev.moviebookingservice.model.entity.Row;
-import com.renatmirzoev.moviebookingservice.model.entity.Seat;
 import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
+import com.renatmirzoev.moviebookingservice.model.entity.Row;
+import com.renatmirzoev.moviebookingservice.model.entity.Seat;
 import com.renatmirzoev.moviebookingservice.model.entity.Theater;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,8 +49,7 @@ class SeatRepositoryTest extends AbstractIntegrationTest {
         long auditoriumId = auditoriumRepository.save(auditorium);
 
         Row row = ModelUtils.row().setAuditoriumId(auditoriumId);
-        Set<Integer> ids = rowRepository.save(Set.of(row));
-        int rowId = ids.iterator().next();
+        long rowId = rowRepository.save(row);
 
         seat = ModelUtils.seat().setRowId(rowId);
     }

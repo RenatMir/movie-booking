@@ -12,14 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.Optional;
+import java.util.TreeSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatException;
 
 class AuditoriumRepositoryTest extends AbstractIntegrationTest {
 
+    @Autowired
+    private SeatRepository seatRepository;
+    @Autowired
+    private RowRepository rowRepository;
     @Autowired
     private AuditoriumRepository auditoriumRepository;
     @Autowired
@@ -50,7 +54,7 @@ class AuditoriumRepositoryTest extends AbstractIntegrationTest {
 
     @Test
     void shouldSaveAndGetAuditoriumByIdWithEmptyRows() {
-        auditorium.setRows(Collections.emptySet());
+        auditorium.setRows(new TreeSet<>());
         long id = auditoriumRepository.save(auditorium);
 
         Optional<Auditorium> auditoriumOptional = auditoriumRepository.getById(id);
@@ -60,6 +64,28 @@ class AuditoriumRepositoryTest extends AbstractIntegrationTest {
         assertThat(auditoriumGet)
             .usingRecursiveComparison()
             .ignoringFields("id", "dateCreated")
+            .isEqualTo(this.auditorium);
+    }
+
+    @Test
+    void shouldSaveAndGetAuditoriumById() {
+        long id = auditoriumRepository.save(auditorium);
+        auditorium.getRows().forEach(row -> {
+            row.setAuditoriumId(id);
+            long rowId = rowRepository.save(row);
+            row.getSeats().forEach(seat -> seat.setRowId(rowId));
+            seatRepository.save(row.getSeats());
+        });
+
+        Optional<Auditorium> auditoriumOptional = auditoriumRepository.getById(id);
+        assertThat(auditoriumOptional).isPresent();
+
+        Auditorium auditoriumGet = auditoriumOptional.get();
+        assertThat(auditoriumGet)
+            .usingRecursiveComparison()
+            .ignoringFields("id", "dateCreated")
+            .ignoringFields("rows.id", "rows.dateCreated")
+            .ignoringFields("rows.seats.id", "rows.seats.dateCreated")
             .isEqualTo(this.auditorium);
     }
 

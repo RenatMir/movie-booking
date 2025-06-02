@@ -13,9 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.Optional;
-import java.util.Set;
+import java.util.TreeSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatException;
@@ -58,10 +57,9 @@ class RowRepositoryTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void shouldSaveAndGetRow() {
-        row.setSeats(Collections.emptySet());
-        Set<Integer> ids = rowRepository.save(Set.of(row));
-        int rowId = ids.iterator().next();
+    void shouldSaveAndGetRowWithEmptySeats() {
+        row.setSeats(new TreeSet<>());
+        long rowId = rowRepository.save(row);
 
         Optional<Row> rowOptional = rowRepository.getById(rowId);
         assertThat(rowOptional).isPresent();
@@ -74,11 +72,28 @@ class RowRepositoryTest extends AbstractIntegrationTest {
     }
 
     @Test
+    void shouldSaveAndGetRow() {
+        long rowId = rowRepository.save(row);
+        row.getSeats().forEach(seat -> seat.setRowId(rowId));
+        seatRepository.save(row.getSeats());
+
+        Optional<Row> rowOptional = rowRepository.getById(rowId);
+        assertThat(rowOptional).isPresent();
+
+        Row rowGet = rowOptional.get();
+        assertThat(rowGet)
+            .usingRecursiveComparison()
+            .ignoringFields("id", "dateCreated")
+            .ignoringFields("seats.id", "seats.dateCreated")
+            .isEqualTo(this.row);
+    }
+
+    @Test
     void shouldNotBeAbleToSaveDuplicate() {
-        rowRepository.save(Set.of(row));
+        rowRepository.save(row);
 
         assertThatException()
-            .isThrownBy(() -> rowRepository.save(Set.of(row)))
+            .isThrownBy(() -> rowRepository.save(row))
             .isInstanceOf(DataIntegrityViolationException.class);
     }
 

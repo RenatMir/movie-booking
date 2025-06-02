@@ -18,6 +18,7 @@ public class AuditoriumService {
 
     private final AuditoriumRepository auditoriumRepository;
     private final AuditoriumCacheRepository auditoriumCacheRepository;
+    private final RowService rowService;
 
     @Transactional
     public long saveAuditorium(Auditorium auditorium) {
@@ -25,7 +26,10 @@ public class AuditoriumService {
             throw new AuditoriumAlreadyExistsException("Auditorium with name %s and theaterId %s already exists".formatted(auditorium.getName(), auditorium.getTheaterId()));
         }
 
-        return auditoriumRepository.save(auditorium);
+        long id = auditoriumRepository.save(auditorium);
+        auditorium.getRows().forEach(row -> row.setAuditoriumId(id));
+        rowService.saveRows(auditorium.getRows());
+        return id;
     }
 
     public Optional<Auditorium> getAuditoriumById(long id) {

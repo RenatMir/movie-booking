@@ -80,4 +80,13 @@ public class Endpoints {
 
         private final String path;
     }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum Auditorium implements Endpoint {
+        CREATE("/auditoriums"),
+        GET_BY_ID("/auditoriums/{id}");
+
+        private final String path;
+    }
 }

@@ -7,7 +7,7 @@ CREATE TABLE auditoriums
     UNIQUE (name, theater_id)
 );
 
-CREATE TABLE auditorium_rows
+CREATE TABLE rows
 (
     id            SERIAL PRIMARY KEY,
     label         INTEGER     NOT NULL,
@@ -16,11 +16,11 @@ CREATE TABLE auditorium_rows
     UNIQUE (label, auditorium_id)
 );
 
-CREATE TABLE auditorium_seats
+CREATE TABLE seats
 (
     id           SERIAL PRIMARY KEY,
     label        INTEGER     NOT NULL,
-    row_id       INTEGER     NOT NULL REFERENCES auditorium_rows (id),
+    row_id       INTEGER     NOT NULL REFERENCES rows (id),
     date_created timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (label, row_id)
 );

@@ -5,27 +5,20 @@ import com.renatmirzoev.moviebookingservice.model.entity.Seat;
 import com.renatmirzoev.moviebookingservice.utils.JdbcUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.JdbcClient;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.util.Comparator;
 import java.util.Optional;
-import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
 public class RowRepository {
 
     private static final String SQL_INSERT_ROW = """
-        INSERT INTO auditorium_rows (label, auditorium_id)
-        VALUES (:label, :auditoriumId);
+        INSERT INTO rows (label, auditorium_id)
+        VALUES (:label, :auditoriumId)
+        RETURNING id;
         """;
 
     private static final String SQL_SELECT_ROW_BY_ID = """
@@ -37,28 +30,19 @@ public class RowRepository {
         s.id as seat_id,
         s.label as seat_label,
         s.date_created as seat_date_created
-        FROM auditorium_rows r
-        LEFT JOIN auditorium_seats s ON s.row_id = r.id
+        FROM "rows" r
+        LEFT JOIN seats s ON s.row_id = r.id
         WHERE r.id = :id
         """;
 
     private final JdbcClient jdbcClient;
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public Set<Integer> save(Set<Row> rows) {
-        SqlParameterSource[] params = rows.stream()
-            .map(row -> new MapSqlParameterSource()
-                .addValue("label", row.getLabel())
-                .addValue("auditoriumId", row.getAuditoriumId()))
-            .toArray(SqlParameterSource[]::new);
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-
-        namedParameterJdbcTemplate.batchUpdate(SQL_INSERT_ROW, params, keyHolder);
-
-        return keyHolder.getKeyList()
-            .stream()
-            .map(keyMap -> (Integer) keyMap.get("id"))
-            .collect(Collectors.toSet());
+    public long save(Row row) {
+        return jdbcClient.sql(SQL_INSERT_ROW)
+            .param("label", row.getLabel())
+            .param("auditoriumId", row.getAuditoriumId())
+            .query(Long.class)
+            .single();
     }
 
     public Optional<Row> getById(long id) {
@@ -75,7 +59,7 @@ public class RowRepository {
                     .setId(rs.getLong("row_id"))
                     .setLabel(rs.getLong("row_label"))
                     .setAuditoriumId(rs.getLong("auditorium_id"))
-                    .setSeats(new TreeSet<>(Comparator.comparingLong(Seat::getLabel)))
+                    .setSeats(new TreeSet<>())
                     .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("row_date_created")));
             }
 
