@@ -22,9 +22,9 @@ public class ShowtimeService {
 
     @Transactional
     public long saveShowtime(Showtime showtime) {
-        if (showtimeExists(showtime.getMovieId(), showtime.getTheaterId(), showtime.getDateShow())) {
-            throw new ShowtimeAlreadyExistsException("Showtime with movieId %s, theaterId %s and dateShow %s already exists"
-                .formatted(showtime.getMovieId(), showtime.getTheaterId(), showtime.getDateShow()));
+        if (showtimeExists(showtime.getMovieId(), showtime.getAuditoriumId(), showtime.getDateShow())) {
+            throw new ShowtimeAlreadyExistsException("Showtime with movieId %s, auditoriumId %s and dateShow %s already exists"
+                .formatted(showtime.getMovieId(), showtime.getAuditoriumId(), showtime.getDateShow()));
         }
 
         Showtime savedShowtime = showtimeRepository.save(showtime);
@@ -40,10 +40,10 @@ public class ShowtimeService {
         });
     }
 
-    public boolean showtimeExists(long movieId, long theaterId, Instant dateShow) {
-        return showtimeCacheRepository.exists(movieId, theaterId, dateShow).orElseGet(() -> {
-            boolean value = showtimeRepository.exists(movieId, theaterId, dateShow);
-            showtimeCacheRepository.saveExists(movieId, theaterId, dateShow);
+    public boolean showtimeExists(long movieId, long auditoriumId, Instant dateShow) {
+        return showtimeCacheRepository.exists(movieId, auditoriumId, dateShow).orElseGet(() -> {
+            boolean value = showtimeRepository.exists(movieId, auditoriumId, dateShow);
+            showtimeCacheRepository.saveExists(movieId, auditoriumId, dateShow);
             return value;
         });
     }

@@ -26,8 +26,8 @@ public class ShowtimeCacheRepository extends AbstractCacheRepository {
         return KEY_SHOWTIME + showtimeId;
     }
 
-    static String keyShowtimeExists(long movieId, long theaterId, Instant dateShow) {
-        return KEY_SHOWTIME_EXISTS + movieId + ":" + theaterId + ":" + dateShow;
+    static String keyShowtimeExists(long movieId, long auditoriumId, Instant dateShow) {
+        return KEY_SHOWTIME_EXISTS + movieId + ":" + auditoriumId + ":" + dateShow;
     }
 
     public void save(Showtime showtime) {
@@ -39,12 +39,12 @@ public class ShowtimeCacheRepository extends AbstractCacheRepository {
             .map(value -> JsonUtils.fromJson(value, Showtime.class));
     }
 
-    public Optional<Boolean> exists(long movieId, long theaterId, Instant dateShow) {
-        return get(keyShowtimeExists(movieId, theaterId, dateShow))
+    public Optional<Boolean> exists(long movieId, long auditoriumId, Instant dateShow) {
+        return get(keyShowtimeExists(movieId, auditoriumId, dateShow))
             .map(Boolean::parseBoolean);
     }
 
-    public void saveExists(long movieId, long theaterId, Instant dateShow) {
-        save(keyShowtimeExists(movieId, theaterId, dateShow), Boolean.TRUE.toString(), TTL_SHOWTIME_EXISTS);
+    public void saveExists(long movieId, long auditoriumId, Instant dateShow) {
+        save(keyShowtimeExists(movieId, auditoriumId, dateShow), Boolean.TRUE.toString(), TTL_SHOWTIME_EXISTS);
     }
 }

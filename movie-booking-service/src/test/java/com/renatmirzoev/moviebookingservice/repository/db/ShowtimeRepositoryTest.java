@@ -31,9 +31,11 @@ class ShowtimeRepositoryTest extends AbstractIntegrationTest {
     private CityRepository cityRepository;
     @Autowired
     private TheaterRepository theaterRepository;
+    @Autowired
+    private AuditoriumRepository auditoriumRepository;
 
     private long movieId;
-    private long theaterId;
+    private long auditoriumId;
 
     @BeforeEach
     @Transactional
@@ -43,7 +45,7 @@ class ShowtimeRepositoryTest extends AbstractIntegrationTest {
         Country country = countryRepository.save(ModelUtils.country());
         City city = cityRepository.save(ModelUtils.city().setCountryId(country.getId()));
         Theater theater = theaterRepository.save(ModelUtils.theater().setCityId(city.getId()));
-        theaterId = theater.getId();
+        auditoriumId = auditoriumRepository.save(ModelUtils.auditorium().setTheaterId(theater.getId()));
     }
 
     @Test
@@ -56,7 +58,7 @@ class ShowtimeRepositoryTest extends AbstractIntegrationTest {
     void shouldSaveAndGetShowtimeById() {
         Showtime showtime = ModelUtils.showtime();
         showtime.setMovieId(movieId);
-        showtime.setTheaterId(theaterId);
+        showtime.setAuditoriumId(auditoriumId);
         showtime = showtimeRepository.save(showtime);
 
         Optional<Showtime> showtimeOptional = showtimeRepository.getById(showtime.getId());
@@ -68,7 +70,7 @@ class ShowtimeRepositoryTest extends AbstractIntegrationTest {
     void shouldNotBeAbleToSaveDuplicate() {
         Showtime showtime = ModelUtils.showtime();
         showtime.setMovieId(movieId);
-        showtime.setTheaterId(theaterId);
+        showtime.setAuditoriumId(auditoriumId);
         showtimeRepository.save(showtime);
 
         assertThatException()
@@ -86,10 +88,10 @@ class ShowtimeRepositoryTest extends AbstractIntegrationTest {
     void shouldReturnTrueWhenShowtimeExists() {
         Showtime showtime = ModelUtils.showtime();
         showtime.setMovieId(movieId);
-        showtime.setTheaterId(theaterId);
+        showtime.setAuditoriumId(auditoriumId);
         showtime = showtimeRepository.save(showtime);
 
-        boolean showtimeExists = showtimeRepository.exists(showtime.getMovieId(), showtime.getTheaterId(), showtime.getDateShow());
+        boolean showtimeExists = showtimeRepository.exists(showtime.getMovieId(), showtime.getAuditoriumId(), showtime.getDateShow());
         assertThat(showtimeExists).isTrue();
     }
 
@@ -100,10 +102,10 @@ class ShowtimeRepositoryTest extends AbstractIntegrationTest {
         Showtime showtime = ModelUtils.showtime();
         showtime.setDateShow(dateShow);
         showtime.setMovieId(movieId);
-        showtime.setTheaterId(theaterId);
+        showtime.setAuditoriumId(auditoriumId);
         showtime = showtimeRepository.save(showtime);
 
-        boolean showtimeExists = showtimeRepository.exists(showtime.getMovieId(), showtime.getTheaterId(), dateShowTruncated);
+        boolean showtimeExists = showtimeRepository.exists(showtime.getMovieId(), showtime.getAuditoriumId(), dateShowTruncated);
         assertThat(showtimeExists).isTrue();
     }
 

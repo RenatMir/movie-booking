@@ -13,7 +13,7 @@ public class CreateShowtimeRequest {
     @Positive
     private long movieId;
     @Positive
-    private long theaterId;
+    private long auditoriumId;
     @NotNull
     private Instant dateShow;
 }

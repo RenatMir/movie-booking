@@ -15,8 +15,8 @@ import java.util.Optional;
 public class ShowtimeRepository {
 
     private static final String SQL_INSERT_SHOWTIME = """
-        INSERT INTO showtimes (movie_id, theater_id, date_show)
-        VALUES (:movieId, :theaterId, :dateShow)
+        INSERT INTO showtimes (movie_id, auditorium_id, date_show)
+        VALUES (:movieId, :auditoriumId, :dateShow)
         RETURNING *;
         """;
 
@@ -24,15 +24,15 @@ public class ShowtimeRepository {
         SELECT * FROM showtimes WHERE id = :id;
         """;
 
-    private static final String SQL_COUNT_SHOWTIMES_BY_MOVIE_ID_THEATER_ID_AND_DATE_SHOW = """
+    private static final String SQL_COUNT_SHOWTIMES_BY_MOVIE_ID_AUDITORIUM_ID_AND_DATE_SHOW = """
         SELECT COUNT(*) FROM showtimes
-        WHERE movie_id = :movieId AND theater_id = :theaterId AND date_show = :dateShow;
+        WHERE movie_id = :movieId AND auditorium_id = :auditoriumId AND date_show = :dateShow;
         """;
 
     private static final RowMapper<Showtime> ROW_MAPPER_SHOWTIME = (rs, rowNum) -> (Showtime) new Showtime()
         .setId(rs.getLong("id"))
         .setMovieId(rs.getLong("movie_id"))
-        .setTheaterId(rs.getLong("theater_id"))
+        .setAuditoriumId(rs.getLong("auditorium_id"))
         .setDateShow(JdbcUtils.instantOrNull(rs.getTimestamp("date_show")))
         .setDateCreated(JdbcUtils.instantOrNull(rs.getTimestamp("date_created")));
 
@@ -41,7 +41,7 @@ public class ShowtimeRepository {
     public Showtime save(Showtime showtime) {
         return jdbcClient.sql(SQL_INSERT_SHOWTIME)
             .param("movieId", showtime.getMovieId())
-            .param("theaterId", showtime.getTheaterId())
+            .param("auditoriumId", showtime.getAuditoriumId())
             .param("dateShow", JdbcUtils.timestampOrNull(showtime.getDateShow()))
             .query(ROW_MAPPER_SHOWTIME)
             .single();
@@ -54,10 +54,10 @@ public class ShowtimeRepository {
             .optional();
     }
 
-    public boolean exists(long movieId, long theaterId, Instant dateShow) {
-        int count = jdbcClient.sql(SQL_COUNT_SHOWTIMES_BY_MOVIE_ID_THEATER_ID_AND_DATE_SHOW)
+    public boolean exists(long movieId, long auditoriumId, Instant dateShow) {
+        int count = jdbcClient.sql(SQL_COUNT_SHOWTIMES_BY_MOVIE_ID_AUDITORIUM_ID_AND_DATE_SHOW)
             .param("movieId", movieId)
-            .param("theaterId", theaterId)
+            .param("auditoriumId", auditoriumId)
             .param("dateShow", JdbcUtils.timestampOrNull(dateShow))
             .query(Integer.class)
             .single();

@@ -13,10 +13,10 @@ import java.time.temporal.ChronoUnit;
 public class Showtime extends AbstractEntity {
     private long id;
     private long movieId;
-    private long theaterId;
+    private long auditoriumId;
     private Instant dateShow;
 
-    public static ChronoUnit DATE_SHOW_TRUNCATION = ChronoUnit.MINUTES;
+    public static final ChronoUnit DATE_SHOW_TRUNCATION = ChronoUnit.MINUTES;
 
     public Showtime setDateShow(Instant dateShow) {
         this.dateShow = dateShow.truncatedTo(DATE_SHOW_TRUNCATION);

@@ -4,6 +4,7 @@ import com.renatmirzoev.moviebookingservice.ModelUtils;
 import com.renatmirzoev.moviebookingservice.model.entity.City;
 import com.renatmirzoev.moviebookingservice.model.entity.Country;
 import com.renatmirzoev.moviebookingservice.model.entity.Theater;
+import com.renatmirzoev.moviebookingservice.repository.db.AuditoriumRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.CityRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.CountryRepository;
 import com.renatmirzoev.moviebookingservice.repository.db.MovieRepository;
@@ -37,9 +38,11 @@ class ShowtimeControllerTest extends AbstractRestTest {
     private CityRepository cityRepository;
     @Autowired
     private TheaterRepository theaterRepository;
+    @Autowired
+    private AuditoriumRepository auditoriumRepository;
 
     private long movieId;
-    private long theaterId;
+    private long auditoriumId;
 
     @BeforeEach
     @Transactional
@@ -49,7 +52,7 @@ class ShowtimeControllerTest extends AbstractRestTest {
         Country country = countryRepository.save(ModelUtils.country());
         City city = cityRepository.save(ModelUtils.city().setCountryId(country.getId()));
         Theater theater = theaterRepository.save(ModelUtils.theater().setCityId(city.getId()));
-        theaterId = theater.getId();
+        auditoriumId = auditoriumRepository.save(ModelUtils.auditorium().setTheaterId(theater.getId()));
     }
 
     @Test
@@ -65,7 +68,7 @@ class ShowtimeControllerTest extends AbstractRestTest {
     void shouldCreateAndGetShowtime() {
         CreateShowtimeRequest createRequest = ModelUtils.createShowtimeRequest();
         createRequest.setMovieId(movieId);
-        createRequest.setTheaterId(theaterId);
+        createRequest.setAuditoriumId(auditoriumId);
         ResponseEntity<CreateShowtimeResponse> createResponse = performRequest(Endpoints.Showtime.CREATE, CreateShowtimeResponse.class)
             .httpMethod(HttpMethod.POST)
             .payload(createRequest)
@@ -85,7 +88,7 @@ class ShowtimeControllerTest extends AbstractRestTest {
             assertThat(getShowtimeResponse).isNotNull();
             assertThat(getShowtimeResponse.getId()).isEqualTo(createShowtimeResponse.getId());
             assertThat(getShowtimeResponse.getMovieId()).isEqualTo(createRequest.getMovieId());
-            assertThat(getShowtimeResponse.getTheaterId()).isEqualTo(createRequest.getTheaterId());
+            assertThat(getShowtimeResponse.getAuditoriumId()).isEqualTo(createRequest.getAuditoriumId());
             assertThat(getShowtimeResponse.getDateShow()).isEqualTo(createRequest.getDateShow());
         }
 
@@ -99,7 +102,7 @@ class ShowtimeControllerTest extends AbstractRestTest {
             assertThat(getShowtimeResponse).isNotNull();
             assertThat(getShowtimeResponse.getId()).isEqualTo(createShowtimeResponse.getId());
             assertThat(getShowtimeResponse.getMovieId()).isEqualTo(createRequest.getMovieId());
-            assertThat(getShowtimeResponse.getTheaterId()).isEqualTo(createRequest.getTheaterId());
+            assertThat(getShowtimeResponse.getAuditoriumId()).isEqualTo(createRequest.getAuditoriumId());
             assertThat(getShowtimeResponse.getDateShow()).isEqualTo(createRequest.getDateShow());
         }
     }
@@ -108,7 +111,7 @@ class ShowtimeControllerTest extends AbstractRestTest {
     void shouldGetBadRequestWhenCreatingExistingShowtime() {
         CreateShowtimeRequest request = ModelUtils.createShowtimeRequest();
         request.setMovieId(movieId);
-        request.setTheaterId(theaterId);
+        request.setAuditoriumId(auditoriumId);
         ResponseEntity<CreateShowtimeResponse> createShowtimeResponse1 = performRequest(Endpoints.Showtime.CREATE, CreateShowtimeResponse.class)
             .httpMethod(HttpMethod.POST)
             .payload(request)

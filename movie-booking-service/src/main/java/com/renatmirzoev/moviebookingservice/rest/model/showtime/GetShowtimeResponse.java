@@ -10,6 +10,6 @@ import java.time.Instant;
 public class GetShowtimeResponse {
     private long id;
     private long movieId;
-    private long theaterId;
+    private long auditoriumId;
     private Instant dateShow;
 }
